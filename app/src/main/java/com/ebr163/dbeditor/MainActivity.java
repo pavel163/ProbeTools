@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ebr163.dbeditor.databinding.ActivityMainBinding;
+import com.ebr163.dbeditor.service.DataBaseHelper;
 import com.ebr163.webserver.AndroidWebServer;
 
 import java.io.IOException;
@@ -19,7 +20,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        androidWebServer = new AndroidWebServer(8080);
+        androidWebServer = new AndroidWebServer(getApplicationContext(), 8080);
+        androidWebServer.setDBName(DataBaseHelper.DB_NAME);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initUI();
     }
@@ -40,13 +42,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void startServer() {
         try {
-            androidWebServer.start(this);
+            androidWebServer.startSever();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     private void stopServer() {
-        androidWebServer.stop(this);
+        androidWebServer.stopServer();
     }
 }

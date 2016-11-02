@@ -6,7 +6,6 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 
 import java.io.IOException;
-import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
@@ -17,52 +16,56 @@ public class AndroidWebServer extends NanoHTTPD {
 
     private int port;
     private String hostname;
+    private Context context;
+    private Router router;
 
-    public AndroidWebServer(int port) {
+    public AndroidWebServer(Context context, int port) {
         super(port);
-        this.port = port;
+        init(context, port);
     }
 
-    public AndroidWebServer(String hostname, int port) {
+    public AndroidWebServer(Context context, String hostname, int port) {
         super(hostname, port);
-        this.port = port;
         this.hostname = hostname;
+        init(context, port);
+    }
+
+    private void init(Context context, int port) {
+        this.port = port;
+        this.context = context;
+        router = new Router(context);
     }
 
     @Override
     public Response serve(IHTTPSession session) {
-        String msg = "<html><body><h1>Hello server</h1>\n";
-        Map<String, String> parms = session.getParms();
-        if (parms.get("username") == null) {
-            msg += "<form action='?' method='get'>\n";
-            msg += "<p>Your name: <input type='text' name='username'></p>\n";
-            msg += "</form>\n";
-        } else {
-            msg += "<p>Hello, " + parms.get("username") + "!</p>";
+        try {
+            return router.route(session);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return newFixedLengthResponse(msg + "</body></html>\n");
     }
 
-    public void start(Context context) throws IOException {
+    public void startSever() throws IOException {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder notificationBuilder = new Notification.Builder(context)
                 .setSmallIcon(R.drawable.server)
                 .setContentTitle("IP Address:")
-                .setContentText(getIpAccess(context));
+                .setContentText(getIpAccess());
         // TODO: 01.11.16 поменять deprecated метод
         notificationManager.notify(0, notificationBuilder.getNotification());
 
         start();
     }
 
-    public void stop(Context context) {
+    public void stopServer() {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(0);
+        stop();
     }
 
-
-    private String getIpAccess(Context context) {
-        if (hostname == null){
+    private String getIpAccess() {
+        if (hostname == null) {
             WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
             int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
             final String formatedIpAddress = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
@@ -70,5 +73,9 @@ public class AndroidWebServer extends NanoHTTPD {
         }
 
         return hostname;
+    }
+
+    public void setDBName(String dbName){
+        router.setDBName(dbName);
     }
 }
