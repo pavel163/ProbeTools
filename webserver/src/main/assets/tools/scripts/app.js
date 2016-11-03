@@ -29,8 +29,11 @@ app.config(["$routeProvider", "$locationProvider", function ($routeProvider, $lo
             action: "scripts"
         })
         .when("/http", {
-            action: "scripts"
+            action: "http"
         })
+        .when("/preferences", {
+                    action: "http"
+                })
         .otherwise({
             redirectTo: "/templates"
         });

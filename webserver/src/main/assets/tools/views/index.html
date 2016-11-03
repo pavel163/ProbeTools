@@ -15,6 +15,8 @@
                 class="fs-headline">Tools</span></button>
         <nav class="main-nav main-nav--lap-and-up">
             <ul>
+                <li><a target="_self" href="/preferences" class="main-nav__link"
+                       lx-ripple="white">Preferences</a></li>
                 <li><a target="_self" href="/http" class="main-nav__link"
                        lx-ripple="white">HttpInterceptor</a></li>
                 <li><a target="_self" href="/db/download/database" class="main-nav__link"
@@ -70,20 +72,23 @@
                 </div>
                 <div flex-item style="padding-top: 30px;">
                     <lx-dropdown position="right" from-top="true">
-                        <button class="btn btn--m btn--black btn--icon"  lx-ripple lx-dropdown-toggle>
+                        <button class="btn btn--m btn--black btn--icon" lx-ripple
+                                lx-dropdown-toggle>
                             <i class="mdi mdi-dots-vertical"></i>
                         </button>
 
                         <lx-dropdown-menu>
                             <ul>
                                 <li>
-                                    <a class="dropdown-link dropdown-link--is-large" ng-click="templates.downloadTemplate()">
+                                    <a class="dropdown-link dropdown-link--is-large"
+                                       ng-click="templates.downloadTemplate()">
                                         <i class="mdi mdi-download"></i>
                                         <span>Скачать</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-link dropdown-link--is-large" ng-click="templates.downloadXml()">
+                                    <a class="dropdown-link dropdown-link--is-large"
+                                       ng-click="templates.downloadXml()">
                                         <i class="mdi mdi-download"></i>
                                         <span>Скачать XML</span>
                                     </a>
@@ -115,12 +120,14 @@
                     <div class="p+">
                         <div class="radio-group" flex-container="row">
                             <div class="radio-button">
-                                <input type="radio" id="radio9" name="radio1" value="doc" ng-model="newTemplate.type" class="radio-button__input">
+                                <input type="radio" id="radio9" name="radio1" value="doc"
+                                       ng-model="newTemplate.type" class="radio-button__input">
                                 <label for="radio9" class="radio-button__label">Doc</label>
                             </div>
 
                             <div class="radio-button">
-                                <input type="radio" id="radio10" name="radio1" value="view" ng-model="newTemplate.type" class="radio-button__input">
+                                <input type="radio" id="radio10" name="radio1" value="view"
+                                       ng-model="newTemplate.type" class="radio-button__input">
                                 <label for="radio10" class="radio-button__label">View</label>
                             </div>
                         </div>
@@ -137,7 +144,9 @@
                     <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>
                         Отмена
                     </button>
-                    <button class="btn btn--m btn--black btn--flat" lx-ripple ng-click="saveDialog('create_template')" >Сохранить</button>
+                    <button class="btn btn--m btn--black btn--flat" lx-ripple
+                            ng-click="saveDialog('create_template')">Сохранить
+                    </button>
                 </div>
             </lx-dialog>
         </div>
@@ -160,14 +169,16 @@
                 </div>
                 <div flex-item style="padding-top: 30px;">
                     <lx-dropdown position="right" from-top="true">
-                        <button class="btn btn--m btn--black btn--icon"  lx-ripple lx-dropdown-toggle>
+                        <button class="btn btn--m btn--black btn--icon" lx-ripple
+                                lx-dropdown-toggle>
                             <i class="mdi mdi-dots-vertical"></i>
                         </button>
 
                         <lx-dropdown-menu>
                             <ul>
                                 <li>
-                                    <a class="dropdown-link dropdown-link--is-large" ng-click="scripts.download()">
+                                    <a class="dropdown-link dropdown-link--is-large"
+                                       ng-click="scripts.download()">
                                         <i class="mdi mdi-download"></i>
                                         <span>Скачать</span>
                                     </a>
@@ -200,16 +211,19 @@
                     <div class="p+">
                         <div class="radio-group" flex-container="row">
                             <div class="radio-button">
-                                <input type="radio" id="radio1" name="radio1" value="plugin" ng-model="newScript.type" class="radio-button__input">
+                                <input type="radio" id="radio1" name="radio1" value="plugin"
+                                       ng-model="newScript.type" class="radio-button__input">
                                 <label for="radio1" class="radio-button__label">Плагин</label>
                             </div>
 
                             <div class="radio-button">
-                                <input type="radio" id="radio2" name="radio1" value="modifier" ng-model="newScript.type" class="radio-button__input">
+                                <input type="radio" id="radio2" name="radio1" value="modifier"
+                                       ng-model="newScript.type" class="radio-button__input">
                                 <label for="radio2" class="radio-button__label">Модификатор</label>
                             </div>
                             <div class="radio-button">
-                                <input type="radio" id="radio3" name="radio1" value="function" ng-model="newScript.type" class="radio-button__input">
+                                <input type="radio" id="radio3" name="radio1" value="function"
+                                       ng-model="newScript.type" class="radio-button__input">
                                 <label for="radio3" class="radio-button__label">Функция</label>
                             </div>
                         </div>
@@ -226,11 +240,12 @@
                     <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>
                         Отмена
                     </button>
-                    <button class="btn btn--m btn--black btn--flat" lx-ripple ng-click="saveDialog('create_script')" >Сохранить</button>
+                    <button class="btn btn--m btn--black btn--flat" lx-ripple
+                            ng-click="saveDialog('create_script')">Сохранить
+                    </button>
                 </div>
             </lx-dialog>
         </div>
-
 
 
         <div flex-item="2" class="ng-hide" ng-hide="active!='rules'">
@@ -252,14 +267,16 @@
                 </div>
                 <div flex-item style="padding-top: 30px;">
                     <lx-dropdown position="right" from-top="true">
-                        <button class="btn btn--m btn--black btn--icon"  lx-ripple lx-dropdown-toggle>
+                        <button class="btn btn--m btn--black btn--icon" lx-ripple
+                                lx-dropdown-toggle>
                             <i class="mdi mdi-dots-vertical"></i>
                         </button>
 
                         <lx-dropdown-menu>
                             <ul>
                                 <li>
-                                    <a class="dropdown-link dropdown-link--is-large" ng-click="rules.download()">
+                                    <a class="dropdown-link dropdown-link--is-large"
+                                       ng-click="rules.download()">
                                         <i class="mdi mdi-download"></i>
                                         <span>Скачать</span>
                                     </a>
@@ -292,12 +309,14 @@
                     <div class="p+">
                         <div class="radio-group" flex-container="row">
                             <div class="radio-button">
-                                <input type="radio" id="radio4" name="radio1" value="doc" ng-model="newRule.type" class="radio-button__input">
+                                <input type="radio" id="radio4" name="radio1" value="doc"
+                                       ng-model="newRule.type" class="radio-button__input">
                                 <label for="radio4" class="radio-button__label">Документ</label>
                             </div>
 
                             <div class="radio-button">
-                                <input type="radio" id="radio5" name="radio1" value="view" ng-model="newRule.type" class="radio-button__input">
+                                <input type="radio" id="radio5" name="radio1" value="view"
+                                       ng-model="newRule.type" class="radio-button__input">
                                 <label for="radio5" class="radio-button__label">View</label>
                             </div>
                         </div>
@@ -314,11 +333,12 @@
                     <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>
                         Отмена
                     </button>
-                    <button class="btn btn--m btn--black btn--flat" lx-ripple ng-click="saveDialog('create_rules')" >Сохранить</button>
+                    <button class="btn btn--m btn--black btn--flat" lx-ripple
+                            ng-click="saveDialog('create_rules')">Сохранить
+                    </button>
                 </div>
             </lx-dialog>
         </div>
-
 
 
         <div flex-item="2" class="ng-hide" ng-hide="active!='styles'">
@@ -334,20 +354,22 @@
                         </lx-select-selected>
 
                         <lx-select-choices>
-                            [{{ $choice.type }}] {{ $choice.name + " - " +  $choice.template}}
+                            [{{ $choice.type }}] {{ $choice.name + " - " + $choice.template}}
                         </lx-select-choices>
                     </lx-select>
                 </div>
                 <div flex-item style="padding-top: 30px;">
                     <lx-dropdown position="right" from-top="true">
-                        <button class="btn btn--m btn--black btn--icon"  lx-ripple lx-dropdown-toggle>
+                        <button class="btn btn--m btn--black btn--icon" lx-ripple
+                                lx-dropdown-toggle>
                             <i class="mdi mdi-dots-vertical"></i>
                         </button>
 
                         <lx-dropdown-menu>
                             <ul>
                                 <li>
-                                    <a class="dropdown-link dropdown-link--is-large" ng-click="styles.download()">
+                                    <a class="dropdown-link dropdown-link--is-large"
+                                       ng-click="styles.download()">
                                         <i class="mdi mdi-download"></i>
                                         <span>Скачать</span>
                                     </a>
@@ -380,17 +402,20 @@
                     <div class="p+">
                         <div class="radio-group" flex-container="row">
                             <div class="radio-button">
-                                <input type="radio" id="radio6" name="radio1" value="style" ng-model="newStyle.type" class="radio-button__input">
+                                <input type="radio" id="radio6" name="radio1" value="style"
+                                       ng-model="newStyle.type" class="radio-button__input">
                                 <label for="radio6" class="radio-button__label">style</label>
                             </div>
 
                             <div class="radio-button">
-                                <input type="radio" id="radio7" name="radio1" value="system" ng-model="newStyle.type" class="radio-button__input">
+                                <input type="radio" id="radio7" name="radio1" value="system"
+                                       ng-model="newStyle.type" class="radio-button__input">
                                 <label for="radio7" class="radio-button__label">system</label>
                             </div>
 
                             <div class="radio-button">
-                                <input type="radio" id="radio8" name="radio1" value="element" ng-model="newStyle.type" class="radio-button__input">
+                                <input type="radio" id="radio8" name="radio1" value="element"
+                                       ng-model="newStyle.type" class="radio-button__input">
                                 <label for="radio8" class="radio-button__label">element</label>
                             </div>
                         </div>
@@ -407,7 +432,9 @@
                     <button class="btn btn--m btn--black btn--flat" lx-ripple lx-dialog-close>
                         Отмена
                     </button>
-                    <button class="btn btn--m btn--black btn--flat" lx-ripple ng-click="saveDialog('create_styles')" >Сохранить</button>
+                    <button class="btn btn--m btn--black btn--flat" lx-ripple
+                            ng-click="saveDialog('create_styles')">Сохранить
+                    </button>
                 </div>
             </lx-dialog>
         </div>

@@ -1,12 +1,14 @@
 package com.ebr163.webserver;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.ebr163.webserver.manager.AssetsManager;
 import com.ebr163.webserver.manager.BaseManager;
 import com.ebr163.webserver.manager.DBManager;
 import com.ebr163.webserver.manager.HttpInterceptManager;
 import com.ebr163.webserver.manager.IndexManager;
+import com.ebr163.webserver.manager.PreferencesManager;
 import com.ebr163.webserver.manager.util.ManagerFactory;
 
 import java.util.HashMap;
@@ -20,6 +22,7 @@ public class Router {
     private ManagerFactory managerFactory;
     private Context context;
     private String dbName;
+    private SharedPreferences preferences;
 
     public Router(Context context) {
         this.context = context;
@@ -50,8 +53,16 @@ public class Router {
         return dbName;
     }
 
-    public void setDBName(String dbName){
+    void setDBName(String dbName){
         this.dbName = dbName;
+    }
+
+    public void setPreferences(SharedPreferences preferences){
+        this.preferences = preferences;
+    }
+
+    public SharedPreferences getPreferences() {
+        return preferences;
     }
 
     public NanoHTTPD.Response route(NanoHTTPD.IHTTPSession session) throws Exception {
@@ -63,6 +74,10 @@ public class Router {
             return getManager(DBManager.class).download(session);
         } else if (session.getUri().matches("/http") && "GET".equals(session.getMethod().name())) {
             return getManager(HttpInterceptManager.class).transition(session);
+        } else if (session.getUri().matches("/preferences") && "GET".equals(session.getMethod().name())) {
+            return getManager(PreferencesManager.class).transition(session);
+        } else if (session.getUri().matches("/preferences/loadAll") && "GET".equals(session.getMethod().name())) {
+            return getManager(PreferencesManager.class).loadAllPreferences(session);
         }
         return null;
     }

@@ -1,6 +1,8 @@
 package com.ebr163.webserver.manager;
 
 import com.ebr163.webserver.Router;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,8 +21,13 @@ import static fi.iki.elonen.NanoHTTPD.newFixedLengthResponse;
 public abstract class BaseManager {
 
     private Router router;
+    Gson gson;
 
-    public Router getRouter() {
+    BaseManager() {
+        this.gson = new GsonBuilder().create();
+    }
+
+    Router getRouter() {
         return router;
     }
 
@@ -29,7 +36,7 @@ public abstract class BaseManager {
         return this;
     }
 
-    public String getBodyFromSession(NanoHTTPD.IHTTPSession session){
+    public String getBodyFromSession(NanoHTTPD.IHTTPSession session) {
         Map<String, String> files = new HashMap<String, String>();
         try {
             session.parseBody(files);
@@ -37,13 +44,13 @@ public abstract class BaseManager {
             e.printStackTrace();
             return null;
         }
-        if(NanoHTTPD.Method.POST.equals(session.getMethod())) {
-            if(!files.containsKey("postData")){
+        if (NanoHTTPD.Method.POST.equals(session.getMethod())) {
+            if (!files.containsKey("postData")) {
                 return null;
             }
             return files.get("postData");
-        } else if(NanoHTTPD.Method.PUT.equals(session.getMethod())) {
-            if(!files.containsKey("content")){
+        } else if (NanoHTTPD.Method.PUT.equals(session.getMethod())) {
+            if (!files.containsKey("content")) {
                 return null;
             }
             File file = new File(files.get("content"));
@@ -60,8 +67,8 @@ public abstract class BaseManager {
         return null;
     }
 
-    public NanoHTTPD.Response responseStringAsJson(String response) {
-        if(response == null) {
+    NanoHTTPD.Response responseStringAsJson(String response) {
+        if (response == null) {
             response = "null";
         } else if (response.length() == 0) {
             response = "\"\"";

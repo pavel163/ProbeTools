@@ -19,5 +19,5 @@ public abstract class TransitionManager extends BaseManager {
         return null;
     }
 
-    abstract String getPage();
+    public abstract String getPage();
 }

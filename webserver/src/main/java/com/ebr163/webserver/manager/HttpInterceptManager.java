@@ -7,7 +7,7 @@ package com.ebr163.webserver.manager;
 public class HttpInterceptManager extends TransitionManager {
 
     @Override
-    String getPage() {
+    public String getPage() {
         return "intercept";
     }
 }

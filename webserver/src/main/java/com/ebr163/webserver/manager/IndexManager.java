@@ -7,7 +7,7 @@ package com.ebr163.webserver.manager;
 public class IndexManager extends TransitionManager {
 
     @Override
-    String getPage() {
+    public String getPage() {
         return "index";
     }
 }

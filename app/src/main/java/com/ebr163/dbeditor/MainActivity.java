@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         androidWebServer = new AndroidWebServer(getApplicationContext(), 8080);
         androidWebServer.setDBName(DataBaseHelper.DB_NAME);
+        androidWebServer.setPreferences(BaseApplication.sharedPreferences);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initUI();
     }
