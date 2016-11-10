@@ -43,6 +43,15 @@ app.controller('AppController',
 //                            response[i].title = response[i].title ? response[i].title : response[i].name
 //                        }
 //                        $scope.preferences.list = response
+
+//                        $scope.nameParam = document.createElement("li")
+//                        $scope.nameParam.className = "ist-row list-row--has-separator"
+
+
+                        $scope.nameParam = document.createElement("li")
+                        $scope.nameParam.className = 'list-row list-row--has-separator'
+                        $scope.nameParam.innerHTML = '<lx-text-field lx-label="First name"><input type="text" ng-model="vm.textFields.floating.firstName"></lx-text-field>'
+                        angular.element(document.getElementById('name_param')).append($scope.nameParam);
                         callback(response[0]);
                     }).
                     error(function () {

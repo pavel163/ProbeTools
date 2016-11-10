@@ -8,6 +8,6 @@ public class IndexManager extends TransitionManager {
 
     @Override
     public String getPage() {
-        return "index";
+        return "index2";
     }
 }
