@@ -2,9 +2,34 @@
 <html>
 <head>
     <script src="/assets/libs/react/react.js"></script>
+    <script src="/assets/libs/materialize/js/materialize.js"></script>
+    <script src="/assets/libs/materialize/js/materialize.min.js"></script>
+    <script src="/assets/libs/jquery/dist/jquery.js"></script>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
+    <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
+    <link rel="stylesheet" href="/assets/styles/tools.css">
 </head>
 <body>
-<div id="example"></div>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo" onclick="$('.slide-out').sideNav('show')">UniversalTools</a>
+    </div>
+</nav>
+
+<ul id="slide-out" class="side-nav">
+    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+    <li><a href="#!">Second Link</a></li>
+    <li>
+        <div class="divider"></div>
+    </li>
+    <li><a class="subheader">Subheader</a></li>
+    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+</ul>
+<a href="#" data-activates="slide-out" class="btn button-collapse"><i class="material-icons">menu</i></a>
+
+
 <script type="text/javascript">
          var Hello = React.createClass({
             render: function() {
@@ -15,6 +40,7 @@
             React.createElement(Hello, {name: "World"}),
            document.getElementById('example')
          );
-      </script>
+
+</script>
 </body>
 </html>
