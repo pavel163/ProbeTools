@@ -1,5 +1,9 @@
 package com.ebr163.webserver.manager;
 
+import java.io.IOException;
+
+import fi.iki.elonen.NanoHTTPD;
+
 /**
  * Created by mac1 on 02.11.16.
  */
@@ -7,7 +11,12 @@ package com.ebr163.webserver.manager;
 public class IndexManager extends TransitionManager {
 
     @Override
-    public String getPage() {
-        return "index2";
+    public NanoHTTPD.Response transition(NanoHTTPD.IHTTPSession session) {
+        try {
+            return getRouter().getManager(AssetsManager.class).assetByPath("tools/views/index2.html");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

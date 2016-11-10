@@ -8,6 +8,7 @@ import com.ebr163.webserver.manager.DBManager;
 import com.ebr163.webserver.manager.HttpInterceptManager;
 import com.ebr163.webserver.manager.IndexManager;
 import com.ebr163.webserver.manager.PreferencesManager;
+import com.ebr163.webserver.manager.TransitionManager;
 
 /**
  * Created by mac1 on 02.11.16.
@@ -34,6 +35,9 @@ public class ManagerFactory {
         }
         if(PreferencesManager.class.equals(manager)) {
             return new PreferencesManager();
+        }
+        if(TransitionManager.class.equals(manager)) {
+            return new TransitionManager();
         }
         return null;
     }

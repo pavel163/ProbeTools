@@ -7,12 +7,8 @@ import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
-public class PreferencesManager extends TransitionManager {
+public class PreferencesManager extends BaseManager {
 
-    @Override
-    public String getPage() {
-        return "preferences";
-    }
 
     public NanoHTTPD.Response loadAllPreferences(NanoHTTPD.IHTTPSession session) {
         Map<String, ?> params = getRouter().getPreferences().getAll();

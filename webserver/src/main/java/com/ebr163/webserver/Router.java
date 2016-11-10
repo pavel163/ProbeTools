@@ -9,6 +9,7 @@ import com.ebr163.webserver.manager.DBManager;
 import com.ebr163.webserver.manager.HttpInterceptManager;
 import com.ebr163.webserver.manager.IndexManager;
 import com.ebr163.webserver.manager.PreferencesManager;
+import com.ebr163.webserver.manager.TransitionManager;
 import com.ebr163.webserver.manager.util.ManagerFactory;
 
 import java.util.HashMap;
@@ -53,11 +54,11 @@ public class Router {
         return dbName;
     }
 
-    void setDBName(String dbName){
+    void setDBName(String dbName) {
         this.dbName = dbName;
     }
 
-    public void setPreferences(SharedPreferences preferences){
+    public void setPreferences(SharedPreferences preferences) {
         this.preferences = preferences;
     }
 
@@ -66,16 +67,14 @@ public class Router {
     }
 
     public NanoHTTPD.Response route(NanoHTTPD.IHTTPSession session) throws Exception {
-        if (session.getUri().matches("/assets/.*") && "GET".equals(session.getMethod().name())) {
+        if (session.getUri().contains(".html") && "GET".equals(session.getMethod().name())) {
+            return getManager(TransitionManager.class).transition(session);
+        } else if (session.getUri().matches("/assets/.*")) {
             return getManager(AssetsManager.class).asset(session);
         } else if (session.getUri().matches("/") && "GET".equals(session.getMethod().name())) {
             return getManager(IndexManager.class).transition(session);
         } else if (session.getUri().matches("/db/download/database") && "GET".equals(session.getMethod().name())) {
             return getManager(DBManager.class).download(session);
-        } else if (session.getUri().matches("/http") && "GET".equals(session.getMethod().name())) {
-            return getManager(HttpInterceptManager.class).transition(session);
-        } else if (session.getUri().matches("/preferences") && "GET".equals(session.getMethod().name())) {
-            return getManager(PreferencesManager.class).transition(session);
         } else if (session.getUri().matches("/preferences/loadAll") && "GET".equals(session.getMethod().name())) {
             return getManager(PreferencesManager.class).loadAllPreferences(session);
         }
