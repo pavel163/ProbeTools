@@ -3,31 +3,52 @@
 <head>
     <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
+    <script src="/assets/scripts/preferences/add_preferences.js"></script>
 
     <meta charset="utf-8">
     <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
     <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo"><i data-activates="slide-out" class="material-icons button-collapse">menu</i>Universal Tools</a>
+        <a href="#" class="brand-logo"><i data-activates="slide-out"
+                                          class="material-icons button-collapse">menu</i>Universal
+            Tools</a>
     </div>
 </nav>
 
 <ul id="slide-out" class="side-nav">
-    <li><a href="#!"><i class="material-icons">settings</i>SharedPreferences</a></li>
-    <li><a href="database.html"><i class="material-icons">view_agenda</i>База данных</a></li>
+    <li><a href="/" class="waves-effect"><i class="material-icons">settings</i>SharedPreferences</a>
+    </li>
+    <li><a href="database.html" class="waves-effect"><i class="material-icons">view_agenda</i>База
+        данных</a></li>
     <li>
         <div class="divider"></div>
     </li>
-    <li><a class="subheader">Subheader</a></li>
-    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
 </ul>
+
+<table id="preferences">
+    <thead>
+    <tr>
+        <th data-field="id">Name</th>
+        <th data-field="name">Value</th>
+        <th data-field="price">Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
 
 <script type="text/javascript">
         $(".button-collapse").sideNav()
+
+        $.get( "/preferences/loadAll")
+            .done(function(data) {
+              addPreferences(data)
+        });
+
 </script>
 </body>
 </html>
