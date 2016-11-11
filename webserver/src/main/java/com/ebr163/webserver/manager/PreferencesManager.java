@@ -1,5 +1,7 @@
 package com.ebr163.webserver.manager;
 
+import android.content.SharedPreferences;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
-public class PreferencesManager extends BaseManager {
+public class PreferencesManager extends TransitionManager {
 
 
     public NanoHTTPD.Response loadAllPreferences(NanoHTTPD.IHTTPSession session) {
@@ -22,5 +24,16 @@ public class PreferencesManager extends BaseManager {
         }
 
         return responseStringAsJson(gson.toJson(preferences));
+    }
+
+    public NanoHTTPD.Response addPreference(NanoHTTPD.IHTTPSession session) {
+        SharedPreferences.Editor ed = getRouter().getPreferences().edit();
+        ed.putString("test", "test");
+        ed.apply();
+        Map<String, String> preference = new HashMap<>();
+        preference.put("key", "key");
+        preference.put("value", "value");
+        preference.put("type", "type");
+        return responseStringAsJson(gson.toJson(preference));
     }
 }

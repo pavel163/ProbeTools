@@ -3,7 +3,7 @@
 <head>
     <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
-    <script src="/assets/scripts/preferences/add_preferences.js"></script>
+    <script src="/assets/scripts/preferences/preferences.js"></script>
 
     <meta charset="utf-8">
     <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
@@ -16,6 +16,10 @@
         <a href="#" class="brand-logo"><i data-activates="slide-out"
                                           class="material-icons button-collapse">menu</i>Universal
             Tools</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="waves-effect" href="#modal1" title="Add"><i class="material-icons">add</i></a>
+            </li>
+        </ul>
     </div>
 </nav>
 
@@ -41,13 +45,29 @@
     </tbody>
 </table>
 
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <h4>Modal Header</h4>
+        <p>A bunch of text</p>
+    </div>
+    <div class="modal-footer">
+        <a href="#" id="add" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+    </div>
+</div>
+
+
 <script type="text/javascript">
         $(".button-collapse").sideNav()
+        $('.modal').modal()
 
         $.get( "/preferences/loadAll")
             .done(function(data) {
-              addPreferences(data)
-        });
+              loadPreferences(data)
+        })
+
+        $('#add').on('click', function(){
+            addPreference()
+        })
 
 </script>
 </body>

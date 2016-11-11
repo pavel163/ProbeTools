@@ -18,4 +18,13 @@ public class TransitionManager extends BaseManager {
         }
         return null;
     }
+
+    public NanoHTTPD.Response transition(String page) {
+        try {
+            return getRouter().getManager(AssetsManager.class).assetByPath("tools/views" + page + ".html");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import com.ebr163.webserver.manager.AssetsManager;
 import com.ebr163.webserver.manager.BaseManager;
 import com.ebr163.webserver.manager.DBManager;
-import com.ebr163.webserver.manager.HttpInterceptManager;
 import com.ebr163.webserver.manager.IndexManager;
 import com.ebr163.webserver.manager.PreferencesManager;
 import com.ebr163.webserver.manager.TransitionManager;
@@ -77,6 +76,8 @@ public class Router {
             return getManager(DBManager.class).download(session);
         } else if (session.getUri().matches("/preferences/loadAll") && "GET".equals(session.getMethod().name())) {
             return getManager(PreferencesManager.class).loadAllPreferences(session);
+        } else if (session.getUri().matches("/addPreference") && "POST".equals(session.getMethod().name())) {
+            return getManager(PreferencesManager.class).addPreference(session);
         }
         return null;
     }
