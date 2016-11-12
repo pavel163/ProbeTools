@@ -1,8 +1,11 @@
-function addPreference(){
-    $.post( "/addPreference")
+function addPreference(data){
+    $.post( "/addPreference", data)
                 .done(function(data) {
-                          $("table tbody").append('<tr><td>'+data.key+'</td><td>'+data.value+'</td><td>'+data.type+'</td></tr>');
-            });
+                   $("table tbody").append('<tr><td>'+data.key+'</td><td>'+data.value+'</td><td>'+data.type+'</td></tr>');
+                })
+                .fail(function(){
+                    alert( "Wrong type" );
+                });
 }
 
 function loadPreferences(preferences){

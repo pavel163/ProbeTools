@@ -15,7 +15,7 @@ public class PreferencesManager extends TransitionManager {
     public NanoHTTPD.Response loadAllPreferences(NanoHTTPD.IHTTPSession session) {
         Map<String, ?> params = getRouter().getPreferences().getAll();
         List<Map<String, String>> preferences = new ArrayList<>();
-        for (Map.Entry<String, ?> param: params.entrySet()){
+        for (Map.Entry<String, ?> param : params.entrySet()) {
             Map<String, String> preference = new HashMap<>();
             preference.put("key", param.getKey());
             preference.put("value", String.valueOf(param.getValue()));
@@ -27,13 +27,39 @@ public class PreferencesManager extends TransitionManager {
     }
 
     public NanoHTTPD.Response addPreference(NanoHTTPD.IHTTPSession session) {
-        SharedPreferences.Editor ed = getRouter().getPreferences().edit();
-        ed.putString("test", "test");
-        ed.apply();
+        try {
+            session.parseBody(new HashMap<String, String>());
+            SharedPreferences.Editor ed = getRouter().getPreferences().edit();
+
+            String type = session.getParameters().get("type").get(0);
+            String value = session.getParameters().get("value").get(0);
+            String key = session.getParameters().get("key").get(0);
+            if ("String".equals(type)) {
+                ed.putString(key, value);
+            } else if ("Integer".equals(type)) {
+                ed.putInt(key, Integer.parseInt(value));
+            } else if ("Float".equals(type)) {
+                ed.putFloat(key, Float.parseFloat(value));
+            } else if ("Long".equals(type)) {
+                ed.putLong(key, Long.parseLong(value));
+            } else if ("Boolean".equals(type)) {
+                ed.putBoolean(key, Boolean.parseBoolean(value));
+            }
+            ed.apply();
+
+        } catch (Throwable e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return responseStringAsJson(gson.toJson(createSuccessAnswer(session)));
+    }
+
+    private Map<String, String> createSuccessAnswer(NanoHTTPD.IHTTPSession session) {
         Map<String, String> preference = new HashMap<>();
-        preference.put("key", "key");
-        preference.put("value", "value");
-        preference.put("type", "type");
-        return responseStringAsJson(gson.toJson(preference));
+        preference.put("key", session.getParameters().get("key").get(0));
+        preference.put("value", session.getParameters().get("value").get(0));
+        preference.put("type", session.getParameters().get("type").get(0));
+        return preference;
     }
 }

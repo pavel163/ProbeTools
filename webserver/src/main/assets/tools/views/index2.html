@@ -26,8 +26,8 @@
 <ul id="slide-out" class="side-nav">
     <li><a href="/" class="waves-effect"><i class="material-icons">settings</i>SharedPreferences</a>
     </li>
-    <li><a href="database.html" class="waves-effect"><i class="material-icons">view_agenda</i>База
-        данных</a></li>
+    <li><a href="database.html" class="waves-effect"><i class="material-icons">view_agenda</i>Database</a>
+    </li>
     <li>
         <div class="divider"></div>
     </li>
@@ -47,11 +47,29 @@
 
 <div id="modal1" class="modal">
     <div class="modal-content">
-        <h4>Modal Header</h4>
-        <p>A bunch of text</p>
+        <div class="input-field col s6">
+            <input id="pref_name" type="text" class="validate">
+            <label for="pref_name">Name</label>
+        </div>
+        <div class="input-field col s6">
+            <input id="pref_value" type="text" class="validate">
+            <label for="pref_value">Value</label>
+        </div>
+        <div class="row">
+            <label>Type</label>
+            <select id="pref_type">
+                <option>String</option>
+                <option>Integer</option>
+                <option>Long</option>
+                <option>Float</option>
+                <option>Boolean</option>
+            </select>
+        </div>
+
     </div>
     <div class="modal-footer">
-        <a href="#" id="add" class="modal-action modal-close waves-effect waves-green btn-flat">Agree</a>
+        <a href="#" id="add"
+           class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
     </div>
 </div>
 
@@ -59,6 +77,7 @@
 <script type="text/javascript">
         $(".button-collapse").sideNav()
         $('.modal').modal()
+        $('select').material_select();
 
         $.get( "/preferences/loadAll")
             .done(function(data) {
@@ -66,9 +85,12 @@
         })
 
         $('#add').on('click', function(){
-            addPreference()
+            var obj = new Object();
+            obj.key = $('#pref_name').val();
+            obj.value  = $('#pref_value').val();
+            obj.type = $('#pref_type').val();
+            addPreference(obj)
         })
-
 </script>
 </body>
 </html>
