@@ -74,10 +74,52 @@
 </div>
 
 
+<div id="medit" class="modal">
+    <div class="modal-content">
+        <embed id="pref_key_edit" hidden="true"/>
+        <div class="input-field col s6">
+            <input id="pref_value_edit" type="text" class="validate">
+            <label for="pref_value_edit">Value</label>
+        </div>
+        <div class="row">
+            <label>Type</label>
+            <select id="pref_type_edit">
+                <option value="String">String</option>
+                <option value="Integer">Integer</option>
+                <option value="Long">Long</option>
+                <option value="Float">Float</option>
+                <option value="Boolean">Boolean</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <a href="#" id="edit"
+           class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
+    </div>
+</div>
+
+
 <script type="text/javascript">
         $(".button-collapse").sideNav()
-        $('.modal').modal()
+        $('.modal').modal({
+            ready: function(modal, trigger) {
+                alert($('#pref_key_edit').val())
+                $('#pref_value_edit').val($('#'+$('#pref_key_edit').val()+"_value").text());
+                $('#pref_type_edit').val($('#'+$('#pref_key_edit').val()+"_type").text());
+
+                $('#pref_type_edit').material_select();
+                Materialize.updateTextFields();
+            },
+            complete: function() {}
+            }
+        );
+
         $('select').material_select();
+
+        $('select').on('contentChanged', function() {
+            $(this).material_select();
+         });
 
         $.get( "/preferences/loadAll")
             .done(function(data) {
