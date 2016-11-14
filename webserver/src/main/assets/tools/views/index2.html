@@ -94,7 +94,7 @@
 
     </div>
     <div class="modal-footer">
-        <a href="#" id="edit"
+        <a href="#" id="save"
            class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
     </div>
 </div>
@@ -104,7 +104,6 @@
         $(".button-collapse").sideNav()
         $('.modal').modal({
             ready: function(modal, trigger) {
-                alert($('#pref_key_edit').val())
                 $('#pref_value_edit').val($('#'+$('#pref_key_edit').val()+"_value").text());
                 $('#pref_type_edit').val($('#'+$('#pref_key_edit').val()+"_type").text());
 
@@ -132,6 +131,14 @@
             obj.value  = $('#pref_value').val();
             obj.type = $('#pref_type').val();
             addPreference(obj)
+        })
+
+        $('#save').on('click', function(){
+            var obj = new Object();
+            obj.key = $('#pref_key_edit').val();
+            obj.value  = $('#pref_value_edit').val();
+            obj.type = $('#pref_type_edit').val();
+            editPreference(obj)
         })
 </script>
 </body>
