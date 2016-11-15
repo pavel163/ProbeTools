@@ -2,6 +2,7 @@ package com.ebr163.webserver;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import com.ebr163.webserver.manager.AssetsManager;
 import com.ebr163.webserver.manager.BaseManager;
@@ -22,6 +23,7 @@ public class Router {
     private ManagerFactory managerFactory;
     private Context context;
     private String dbName;
+    private SQLiteOpenHelper sqLiteOpenHelper;
     private SharedPreferences preferences;
 
     public Router(Context context) {
@@ -65,6 +67,14 @@ public class Router {
         return preferences;
     }
 
+    public SQLiteOpenHelper getSqLiteOpenHelper() {
+        return sqLiteOpenHelper;
+    }
+
+    public void setSqLiteOpenHelper(SQLiteOpenHelper sqLiteOpenHelper) {
+        this.sqLiteOpenHelper = sqLiteOpenHelper;
+    }
+
     public NanoHTTPD.Response route(NanoHTTPD.IHTTPSession session) throws Exception {
         if (session.getUri().contains(".html") && "GET".equals(session.getMethod().name())) {
             return getManager(TransitionManager.class).transition(session);
@@ -78,6 +88,8 @@ public class Router {
             return getManager(PreferencesManager.class).loadAllPreferences(session);
         } else if (session.getUri().matches("/addPreference") && "POST".equals(session.getMethod().name())) {
             return getManager(PreferencesManager.class).addPreference(session);
+        } else if (session.getUri().matches("/loadTableNames") && "GET".equals(session.getMethod().name())) {
+            return getManager(DBManager.class).loadAllTableNames(session);
         }
         return null;
     }

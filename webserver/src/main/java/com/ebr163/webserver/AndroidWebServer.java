@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.net.wifi.WifiManager;
 
 import java.io.IOException;
@@ -83,5 +84,9 @@ public class AndroidWebServer extends NanoHTTPD {
 
     public void setPreferences(SharedPreferences preferences){
         router.setPreferences(preferences);
+    }
+
+    public void setSQLiteOpenHelper(SQLiteOpenHelper sqLiteOpenHelper) {
+        router.setSqLiteOpenHelper(sqLiteOpenHelper);
     }
 }

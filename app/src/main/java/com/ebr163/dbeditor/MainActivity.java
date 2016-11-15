@@ -1,8 +1,8 @@
 package com.ebr163.dbeditor;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.ebr163.dbeditor.databinding.ActivityMainBinding;
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         androidWebServer = new AndroidWebServer(getApplicationContext(), 8080);
         androidWebServer.setDBName(DataBaseHelper.DB_NAME);
         androidWebServer.setPreferences(BaseApplication.sharedPreferences);
+        androidWebServer.setSQLiteOpenHelper(BaseApplication.myDbHelper);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initUI();
     }

@@ -3,11 +3,14 @@
 <head>
     <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
+    <script src="/assets/libs/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/assets/scripts/database/database.js"></script>
 
     <meta charset="utf-8">
     <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
+    <link rel="stylesheet" href="/assets/libs/bootstrap-table/bootstrap-table.css">
     <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" >
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
 <nav>
@@ -21,6 +24,14 @@
     </div>
 </nav>
 
+<div class="row" style="margin-right: 10%; margin-left: 10%; margin-top: 15px;">
+    <label>Type</label>
+    <select id="tables">
+    </select>
+</div>
+
+<table id="table" class="bordered"></table>
+
 <ul id="slide-out" class="side-nav">
     <li><a href="/"><i class="material-icons">settings</i>SharedPreferences</a></li>
     <li><a href="database.html"><i class="material-icons">view_agenda</i>Database</a></li>
@@ -28,6 +39,32 @@
 
 <script type="text/javascript">
         $(".button-collapse").sideNav()
+        $('select').material_select()
+        loadTableNames()
+
+       $('#table').bootstrapTable({
+    columns: [{
+        field: 'id',
+        title: 'Item ID'
+    }, {
+        field: 'name',
+        title: 'Item Name'
+    }, {
+        field: 'price',
+        title: 'Item Price'
+    }],
+    data: [{
+        id: 1,
+        name: 'Item 1',
+        price: '$1'
+    }, {
+        id: 2,
+        name: 'Item 2',
+        price: '$2'
+    }]
+});
+
+
 </script>
 </body>
 </html>
