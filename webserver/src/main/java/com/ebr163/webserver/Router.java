@@ -90,6 +90,8 @@ public class Router {
             return getManager(PreferencesManager.class).addPreference(session);
         } else if (session.getUri().matches("/loadTableNames") && "GET".equals(session.getMethod().name())) {
             return getManager(DBManager.class).loadAllTableNames(session);
+        } else if (session.getUri().matches("/loadTable") && "GET".equals(session.getMethod().name())) {
+            return getManager(DBManager.class).loadTable(session);
         }
         return null;
     }

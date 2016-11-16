@@ -52,9 +52,7 @@
 }
 
 .fixed-table-body {
-    overflow-x: auto;
-    overflow-y: auto;
-    height: 100%;
+
 }
 
 .fixed-table-container table {
