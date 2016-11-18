@@ -1,0 +1,98 @@
+<html ng-app="app" ng-controller="AppController">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/assets/libs/lumx/dist/lumx.css">
+    <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <link rel="stylesheet" href="/assets/styles/tools.css">
+</head>
+
+<body>
+<header class="header">
+    <div id="progress"></div>
+    <section style="margin:auto">
+        <button class="btn btn--l btn--white btn--flat" lx-ripple="white" href="/"><span
+                class="fs-headline">Tools</span></button>
+        <nav class="main-nav main-nav--lap-and-up">
+            <ul>
+                <li><a target="_self" href="/preferences" class="main-nav__link"
+                       lx-ripple="white">Preferences</a></li>
+                <li><a target="_self" href="/http" class="main-nav__link"
+                       lx-ripple="white">HttpInterceptor</a></li>
+                <li><a target="_self" href="/db/download/database" class="main-nav__link"
+                       lx-ripple="white">База данных</a></li>
+            </ul>
+        </nav>
+    </section>
+</header>
+
+<div class="card" style="height:960px;margin:auto;">
+    <div class="mt++" flex-container="row" flex-gutter="24" style="padding:36px 24px 0 24px">
+
+        <div class="p+" flex-container="row" flex-gutter="24" flex-wrap>
+            <div flex-item="6">
+                <span class="fs-title display-block mb">Name</span>
+
+                <ul class="list mt++" id="name_param">
+
+                </ul>
+            </div>
+
+            <div flex-item="6">
+                <span class="fs-title display-block mb">Value</span>
+
+                <ul class="list mt++">
+                    <li class="list-row list-row--has-separator">
+                        <lx-text-field lx-label="First name">
+                            <input type="text" ng-model="vm.textFields.floating.firstName">
+                        </lx-text-field>
+                    </li>
+                    <li class="list-row list-row--has-separator">
+                        <lx-text-field lx-label="First name">
+                            <input type="text" ng-model="vm.textFields.floating.firstName">
+                        </lx-text-field>
+                    </li>
+                    <li class="list-row list-row--has-separator">
+                        <lx-text-field lx-label="First name">
+                            <input type="text" ng-model="vm.textFields.floating.firstName">
+                        </lx-text-field>
+                    </li>
+                </ul>
+            </div>
+
+            <div flex-item="6">
+                <span class="fs-title display-block mb">Type</span>
+
+                <ul class="list mt++">
+                    <li class="list-row list-row--has-separator">
+                        <lx-text-field lx-label="First name">
+                            <input type="text" ng-model="vm.textFields.floating.firstName">
+                        </lx-text-field>
+                    </li>
+                    <li class="list-row list-row--has-separator">
+                        <lx-text-field lx-label="First name">
+                            <input type="text" ng-model="vm.textFields.floating.firstName">
+                        </lx-text-field>
+                    </li>
+                    <li class="list-row list-row--has-separator">
+                        <lx-text-field lx-label="First name">
+                            <input type="text" ng-model="vm.textFields.floating.firstName">
+                        </lx-text-field>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/libs/jquery/dist/jquery.js"></script>
+    <script src="/assets/libs/lodash/lodash.js"></script>
+    <script src="/assets/libs/velocity/velocity.js"></script>
+    <script src="/assets/libs/moment/min/moment-with-locales.min.js"></script>
+    <script src="/assets/libs/angular/angular.js"></script>
+    <script src="/assets/libs/angular-route/angular-route.js"></script>
+    <script src="/assets/libs/lumx/dist/lumx.js"></script>
+
+    <script src="/assets/scripts/format-xml.js"></script>
+    <script src="/assets/scripts/preferences.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/libs/materialize/js/materialize.min.js"></script>
+    <script src="/assets/libs/bootstrap-table/bootstrap-table.js"></script>
+    <script src="/assets/scripts/database/database.js"></script>
+    <script src="/assets/libs/ace/ace.js"></script>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
+    <link rel="stylesheet" href="/assets/libs/bootstrap-table/bootstrap-table.css">
+    <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
+    <link rel="stylesheet" href="/assets/styles/tools.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo"><i data-activates="slide-out"
+                                          class="material-icons button-collapse">menu</i>Database</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="#modal1" title="New SQL"><i class="material-icons">keyboard</i></a>
+            <li><a href="db/download/database" title="Load DB"><i class="material-icons">file_download</i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="row" style="margin-right: 10%; margin-left: 10%; margin-top: 15px;">
+    <label>Type</label>
+    <select id="tables" name="table">
+        <option>Select</option>
+    </select>
+</div>
+
+<div style="height:600px; overflow-x:scroll; overflow:scroll">
+    <table id="table" class="bordered"></table>
+</div>
+
+<ul id="slide-out" class="side-nav">
+    <li><a href="/"><i class="material-icons">settings</i>SharedPreferences</a></li>
+    <li><a href="database.html"><i class="material-icons">view_agenda</i>Database</a></li>
+</ul>
+
+<div id="modal1" class="modal bottom-sheet modal-fixed-footer">
+    <div class="modal-content">
+        <p style="font-weight: 600;font-size:200%; margin-bottom:0px;margin-top:0px">SQL request</p>
+        <div id="editor"></div>
+    </div>
+    <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Run</a>
+    </div>
+</div>
+
+<script type="text/javascript">
+        $(".button-collapse").sideNav()
+        $('select').material_select()
+        $('.modal').modal();
+
+        var editor = ace.edit("editor");
+
+        loadTableNames()
+
+        $( "select" ).change(function() {
+            var data = {}
+            data.table = $('#tables').val()
+            loadTable(data)
+        });
+
+</script>
+</body>
+</html>

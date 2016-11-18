@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/libs/materialize/js/materialize.min.js"></script>
+    <script src="/assets/scripts/preferences/preferences.js"></script>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
+    <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo"><i data-activates="slide-out"
+                                          class="material-icons button-collapse">menu</i>Universal
+            Tools</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a class="waves-effect" href="#modal1" title="Add"><i class="material-icons">add</i></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<ul id="slide-out" class="side-nav">
+    <li><a href="/" class="waves-effect"><i class="material-icons">settings</i>SharedPreferences</a>
+    </li>
+    <li><a href="database.html" class="waves-effect"><i class="material-icons">view_agenda</i>Database</a>
+    </li>
+    <li>
+        <div class="divider"></div>
+    </li>
+</ul>
+
+<table id="preferences">
+    <thead>
+    <tr>
+        <th data-field="id">Name</th>
+        <th data-field="name">Value</th>
+        <th data-field="price">Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<div id="modal1" class="modal">
+    <div class="modal-content">
+        <div class="input-field col s6">
+            <input id="pref_name" type="text" class="validate">
+            <label for="pref_name">Name</label>
+        </div>
+        <div class="input-field col s6">
+            <input id="pref_value" type="text" class="validate">
+            <label for="pref_value">Value</label>
+        </div>
+        <div class="row">
+            <label>Type</label>
+            <select id="pref_type">
+                <option>String</option>
+                <option>Integer</option>
+                <option>Long</option>
+                <option>Float</option>
+                <option>Boolean</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <a href="#" id="add"
+           class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
+    </div>
+</div>
+
+
+<div id="medit" class="modal">
+    <div class="modal-content">
+        <embed id="pref_key_edit" hidden="true"/>
+        <div class="input-field col s6">
+            <input id="pref_value_edit" type="text" class="validate">
+            <label for="pref_value_edit">Value</label>
+        </div>
+        <div class="row">
+            <label>Type</label>
+            <select id="pref_type_edit">
+                <option value="String">String</option>
+                <option value="Integer">Integer</option>
+                <option value="Long">Long</option>
+                <option value="Float">Float</option>
+                <option value="Boolean">Boolean</option>
+            </select>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <a href="#" id="save"
+           class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+        $(".button-collapse").sideNav()
+        $('.modal').modal({
+            ready: function(modal, trigger) {
+                $('#pref_value_edit').val($('#'+$('#pref_key_edit').val()+"_value").text());
+                $('#pref_type_edit').val($('#'+$('#pref_key_edit').val()+"_type").text());
+
+                $('#pref_type_edit').material_select();
+                Materialize.updateTextFields();
+            },
+            complete: function() {}
+            }
+        );
+
+        $('select').material_select();
+
+        $('select').on('contentChanged', function() {
+            $(this).material_select();
+         });
+
+        $.get( "/preferences/loadAll")
+            .done(function(data) {
+              loadPreferences(data)
+        })
+
+        $('#add').on('click', function(){
+            var obj = new Object();
+            obj.key = $('#pref_name').val();
+            obj.value  = $('#pref_value').val();
+            obj.type = $('#pref_type').val();
+            addPreference(obj)
+        })
+
+        $('#save').on('click', function(){
+            var obj = new Object();
+            obj.key = $('#pref_key_edit').val();
+            obj.value  = $('#pref_value_edit').val();
+            obj.type = $('#pref_type_edit').val();
+            editPreference(obj)
+        })
+
+</script>
+</body>
+</html>
