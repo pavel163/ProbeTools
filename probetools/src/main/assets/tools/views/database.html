@@ -5,7 +5,8 @@
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
     <script src="/assets/libs/bootstrap-table/bootstrap-table.js"></script>
     <script src="/assets/scripts/database/database.js"></script>
-    <script src="/assets/libs/ace/ace.js"></script>
+    <script src="/assets/libs/ace-builds/src-noconflict/ace.js" type="text/javascript"
+            charset="utf-8"></script>
 
     <meta charset="utf-8">
     <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
@@ -60,6 +61,8 @@
         $('.modal').modal();
 
         var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/chrome");
+        editor.getSession().setMode("ace/mode/sql");
 
         loadTableNames()
 
