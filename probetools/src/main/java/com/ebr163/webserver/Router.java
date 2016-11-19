@@ -19,33 +19,34 @@ import fi.iki.elonen.NanoHTTPD;
 
 public class Router {
 
-    private Map<Class<? extends BaseManager>, BaseManager> managers = new HashMap<>();
+    private Map<Class<? extends BaseManager>, ? extends BaseManager> managers;
     private ManagerFactory managerFactory;
     private Context context;
     private String dbName;
     private SQLiteOpenHelper sqLiteOpenHelper;
     private SharedPreferences preferences;
 
-    public Router(Context context) {
+    Router(Context context) {
         this.context = context;
+        managers = new HashMap<>();
         managerFactory = new ManagerFactory();
     }
 
-    public ManagerFactory getManagerFactory() {
+    private ManagerFactory getManagerFactory() {
         return managerFactory;
     }
 
     private <T extends BaseManager> T create(Class<T> controller) {
-        return (T) getManagerFactory().build(context, controller);
+        return getManagerFactory().build(context, controller);
     }
 
-    public BaseManager registerController(BaseManager manager) {
-        return manager.setRouter(this);
+    public <T extends BaseManager> T registerController(T manager) {
+        return (T) manager.setRouter(this);
     }
 
     public <T extends BaseManager> T getManager(Class<T> manager) {
         if (!managers.containsKey(manager)) {
-            return (T) registerController(create(manager));
+            return registerController(create(manager));
         }
 
         return (T) managers.get(manager);
@@ -71,7 +72,7 @@ public class Router {
         return sqLiteOpenHelper;
     }
 
-    public void setSqLiteOpenHelper(SQLiteOpenHelper sqLiteOpenHelper) {
+    void setSqLiteOpenHelper(SQLiteOpenHelper sqLiteOpenHelper) {
         this.sqLiteOpenHelper = sqLiteOpenHelper;
     }
 
@@ -92,6 +93,8 @@ public class Router {
             return getManager(DBManager.class).loadAllTableNames(session);
         } else if (session.getUri().matches("/loadTable") && "GET".equals(session.getMethod().name())) {
             return getManager(DBManager.class).loadTable(session);
+        } else if (session.getUri().matches("/runSQL") && "POST".equals(session.getMethod().name())) {
+            return getManager(DBManager.class).runSQL(session);
         }
         return null;
     }

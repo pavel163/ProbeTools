@@ -18,3 +18,17 @@ function loadTable(data){
                 })
         })
 }
+
+function runSQL(data){
+        $.post( "/runSQL", data)
+            .done(function(data) {
+                $('#table').bootstrapTable("destroy")
+                $('#table').bootstrapTable({
+                     columns: data.column,
+                     data: data.data
+                })
+            })
+            .fail(function(){
+                alert( "Bad sql" );
+            });
+}

@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,45 +56,22 @@ public class DBManager extends BaseManager {
     }
 
     public NanoHTTPD.Response loadTable(NanoHTTPD.IHTTPSession session) {
-        String table = session.getParameters().get(TABLE).get(0).toString();
-        String[] columnTypes = getColumnTypes(table);
+        String table = session.getParameters().get(TABLE).get(0);
+        String[] columnTypes = getAllColumnTypes(table);
 
         SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
         Cursor dbCursor = sqLiteDatabase.query(table, null, null, null, null, null, null);
 
-        String[] columnNames = dbCursor.getColumnNames();
-
         Map<String, List<Map<String, String>>> result = new HashMap<>();
+        result.put(COLUMN, dumpColumnNames(dbCursor, columnTypes));
+        result.put(DATA, dumpData(dbCursor));
 
-        List<Map<String, String>> colums = new ArrayList<>();
-        for (int i = 0; i < columnNames.length; i++) {
-            Map<String, String> column = new HashMap<>();
-            column.put(FIELD, columnNames[i]);
-            column.put(TITLE, columnNames[i] + " (" + columnTypes[i] + ") ");
-            colums.add(column);
-        }
-        result.put(COLUMN, colums);
-
-        List<Map<String, String>> datas = new ArrayList<>();
-        if (dbCursor.moveToFirst()) {
-            do {
-                Map<String, String> data = new HashMap<>();
-                for (int i = 0; i < columnNames.length; i++) {
-                    // TODO: 16.11.16 сделать обработку BLOB
-                    data.put(columnNames[i], dbCursor.getString(dbCursor.getColumnIndex(columnNames[i])));
-                }
-                datas.add(data);
-            } while (dbCursor.moveToNext());
-        } else
-            Log.d("cursor", "0 rows");
-
-        result.put(DATA, datas);
         dbCursor.close();
         getRouter().getSqLiteOpenHelper().close();
         return responseStringAsJson(gson.toJson(result));
     }
 
-    private String[] getColumnTypes(String table) {
+    private String[] getAllColumnTypes(String table) {
         SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("PRAGMA table_info(" + table + ")", null);
         String[] columnTypes = new String[cursor.getCount()];
@@ -105,5 +83,57 @@ public class DBManager extends BaseManager {
         cursor.close();
         sqLiteDatabase.close();
         return columnTypes;
+    }
+
+    public NanoHTTPD.Response runSQL(NanoHTTPD.IHTTPSession session) {
+        try {
+            session.parseBody(new HashMap<String, String>());
+        } catch (IOException | NanoHTTPD.ResponseException e) {
+            e.printStackTrace();
+        }
+
+        String sql = session.getParameters().get("sql").get(0);
+        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
+
+        Map<String, List<Map<String, String>>> result = new HashMap<>();
+        result.put(COLUMN, dumpColumnNames(cursor, null));
+        result.put(DATA, dumpData(cursor));
+
+        sqLiteDatabase.close();
+        return responseStringAsJson(gson.toJson(result));
+    }
+
+    private List<Map<String, String>> dumpData(Cursor cursor) {
+        List<Map<String, String>> datas = new ArrayList<>();
+        String[] columnNames = cursor.getColumnNames();
+        if (cursor.moveToFirst()) {
+            do {
+                Map<String, String> data = new HashMap<>();
+                for (String columnName : columnNames) {
+                    // TODO: 16.11.16 сделать обработку BLOB
+                    data.put(columnName, cursor.getString(cursor.getColumnIndex(columnName)));
+                }
+                datas.add(data);
+            } while (cursor.moveToNext());
+        } else
+            Log.d("cursor", "0 rows");
+        return datas;
+    }
+
+    private List<Map<String, String>> dumpColumnNames(Cursor cursor, String[] columnTypes) {
+        String[] columnNames = cursor.getColumnNames();
+        List<Map<String, String>> colums = new ArrayList<>();
+        for (int i = 0; i < columnNames.length; i++) {
+            Map<String, String> column = new HashMap<>();
+            column.put(FIELD, columnNames[i]);
+            if (columnTypes != null && columnTypes[i] != null) {
+                column.put(TITLE, columnNames[i] + " (" + columnTypes[i] + ") ");
+            } else {
+                column.put(TITLE, columnNames[i]);
+            }
+            colums.add(column);
+        }
+        return colums;
     }
 }

@@ -51,7 +51,7 @@
         <div id="editor"></div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Run</a>
+        <a href="#!" id="run" class=" modal-action modal-close waves-effect waves-green btn-flat">Run</a>
     </div>
 </div>
 
@@ -60,9 +60,9 @@
         $('select').material_select()
         $('.modal').modal();
 
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/chrome");
-        editor.getSession().setMode("ace/mode/sql");
+        var editor = ace.edit("editor")
+        editor.setTheme("ace/theme/chrome")
+        editor.getSession().setMode("ace/mode/sql")
 
         loadTableNames()
 
@@ -71,6 +71,12 @@
             data.table = $('#tables').val()
             loadTable(data)
         });
+
+        $('#run').on('click', function(){
+            var obj = new Object()
+            obj.sql = editor.getValue()
+            runSQL(obj)
+        })
 
 </script>
 </body>
