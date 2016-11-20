@@ -92,11 +92,11 @@ public class DBManager extends BaseManager {
             e.printStackTrace();
         }
 
-        String sql = session.getParameters().get("sql").get(0);
+        String sql = session.getParameters().get("sql").get(0).toLowerCase();
         SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
 
-        Map<String, List<Map<String, String>>> result = new HashMap<>();
+        Map<String, Object> result = new HashMap<>();
         result.put(COLUMN, dumpColumnNames(cursor, null));
         result.put(DATA, dumpData(cursor));
 

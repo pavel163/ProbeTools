@@ -13,7 +13,7 @@ public class IndexManager extends TransitionManager {
     @Override
     public NanoHTTPD.Response transition(NanoHTTPD.IHTTPSession session) {
         try {
-            return getRouter().getManager(AssetsManager.class).assetByPath("tools/views/index2.html");
+            return getRouter().getManager(AssetsManager.class).assetByPath("tools/views/index.html");
         } catch (IOException e) {
             e.printStackTrace();
         }

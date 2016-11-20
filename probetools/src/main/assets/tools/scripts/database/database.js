@@ -10,29 +10,39 @@ function loadTableNames(){
 }
 
 function loadTable(data){
-        $.get( "/loadTable", data)
-            .done(function(data) {
-                preloadOff()
-                $('#table').bootstrapTable("destroy")
-                $('#table').bootstrapTable({
-                    columns: data.column,
-                    data: data.data
-                })
-        })
+        if (data.table == 'Sql'){
+            $('#table').bootstrapTable("destroy")
+            preloadOff()
+        } else{
+            $.get( "/loadTable", data)
+                    .done(function(data) {
+                        preloadOff()
+                        $('#table').bootstrapTable("destroy")
+                        $('#table').bootstrapTable({
+                            columns: data.column,
+                            data: data.data
+                        })
+             })
+        }
 }
 
 function runSQL(data){
         $.post( "/runSQL", data)
             .done(function(data) {
+                $('#tables').val('Sql')
+                $('#tables').material_select();
+
                 preloadOff()
                 $('#table').bootstrapTable("destroy")
                 $('#table').bootstrapTable({
                      columns: data.column,
                      data: data.data
                 })
+
+               Materialize.toast('Success', 3000)
             })
             .fail(function(){
                 preloadOff()
-                alert( "Bad sql" );
+                Materialize.toast('Error. Bad sql', 3000)
             });
 }
