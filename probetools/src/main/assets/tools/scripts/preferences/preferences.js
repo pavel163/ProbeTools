@@ -1,12 +1,14 @@
 function addPreference(data){
     $.post( "/addPreference", data)
                 .done(function(data) {
+                    preloadOff()
                    $("table tbody").append('<tr><td id="'+data.key +'_key"><a class="waves-effect" id="'+data.key +'" href="#medit" title="Edit"><i class="material-icons">mode_edit</i></a>'+data.key+'</td><td id="'+data.key +'_value">'+data.value+'</td><td id="'+data.key +'_type">'+data.type+'</td></tr>');
                            $('#'+data.key).on('click', function(){
                                        $("#pref_key_edit").val(this.id)
                            })
                 })
                 .fail(function(){
+                    preloadOff()
                     alert( "Wrong type" );
                 });
 }
@@ -17,16 +19,19 @@ function loadPreferences(preferences){
         $('#'+preferences[i].key).on('click', function(){
                     $("#pref_key_edit").val(this.id)
         })
+        preloadOff()
     }
 }
 
 function editPreference(data){
     $.post( "/addPreference", data)
                 .done(function(data) {
+                    preloadOff()
                    $('#'+data.key+ '_value').text(data.value)
                    $('#'+data.key+ '_type').text(data.type)
                 })
                 .fail(function(){
+                    preloadOff()
                     alert( "Wrong type" );
                 });
 }

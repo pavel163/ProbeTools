@@ -1,6 +1,7 @@
 function loadTableNames(){
         $.get( "/loadTableNames")
             .done(function(data) {
+                preloadOff()
                 for (i = 0; i < data.length; i++) {
                     $('#tables').append($("<option></option>").text(data[i]))
                 }
@@ -11,6 +12,7 @@ function loadTableNames(){
 function loadTable(data){
         $.get( "/loadTable", data)
             .done(function(data) {
+                preloadOff()
                 $('#table').bootstrapTable("destroy")
                 $('#table').bootstrapTable({
                     columns: data.column,
@@ -22,6 +24,7 @@ function loadTable(data){
 function runSQL(data){
         $.post( "/runSQL", data)
             .done(function(data) {
+                preloadOff()
                 $('#table').bootstrapTable("destroy")
                 $('#table').bootstrapTable({
                      columns: data.column,
@@ -29,6 +32,7 @@ function runSQL(data){
                 })
             })
             .fail(function(){
+                preloadOff()
                 alert( "Bad sql" );
             });
 }

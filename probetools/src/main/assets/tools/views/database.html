@@ -5,6 +5,7 @@
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
     <script src="/assets/libs/bootstrap-table/bootstrap-table.js"></script>
     <script src="/assets/scripts/database/database.js"></script>
+    <script src="/assets/scripts/utils/preload.js"></script>
     <script src="/assets/libs/ace-builds/src-noconflict/ace.js" type="text/javascript"
             charset="utf-8"></script>
 
@@ -14,23 +15,25 @@
     <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
     <link rel="stylesheet" href="/assets/styles/tools.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
 </head>
 <body>
 <nav>
     <div class="nav-wrapper">
-        <a href="#" class="brand-logo"><i data-activates="slide-out"
-                                          class="material-icons button-collapse">menu</i>Database</a>
+        <a class="brand-logo"><i data-activates="slide-out"
+                                 class="material-icons button-collapse">menu</i>Database</a>
         <ul class="right hide-on-med-and-down">
             <li><a href="#modal1" title="New SQL"><i class="material-icons">keyboard</i></a>
             <li><a href="db/download/database" title="Load DB"><i class="material-icons">file_download</i></a>
             </li>
         </ul>
     </div>
+    <div class="progress" id="progress" style="margin:0">
+        <div class="indeterminate"></div>
+    </div>
 </nav>
 
 <div class="row" style="margin-right: 10%; margin-left: 10%; margin-top: 15px;">
-    <label>Type</label>
+    <label>Table</label>
     <select id="tables" name="table">
         <option>Select</option>
     </select>
@@ -51,14 +54,14 @@
         <div id="editor"></div>
     </div>
     <div class="modal-footer">
-        <a href="#!" id="run" class=" modal-action modal-close waves-effect waves-green btn-flat">Run</a>
+        <a id="run" class=" modal-action modal-close waves-effect waves-green btn-flat">Run</a>
     </div>
 </div>
 
 <script type="text/javascript">
         $(".button-collapse").sideNav()
         $('select').material_select()
-        $('.modal').modal();
+        $('.modal').modal()
 
         var editor = ace.edit("editor")
         editor.setTheme("ace/theme/chrome")
@@ -68,11 +71,13 @@
 
         $( "select" ).change(function() {
             var data = {}
+            preload0n()
             data.table = $('#tables').val()
             loadTable(data)
         });
 
         $('#run').on('click', function(){
+            preload0n()
             var obj = new Object()
             obj.sql = editor.getValue()
             runSQL(obj)
