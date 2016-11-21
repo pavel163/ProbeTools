@@ -1,4 +1,4 @@
-package com.ebr163.webserver;
+package com.ebr163.probetools;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -14,21 +14,14 @@ import fi.iki.elonen.NanoHTTPD;
 /**
  * Created by mac1 on 01.11.16.
  */
-public class AndroidWebServer extends NanoHTTPD {
+public final class AndroidWebServer extends NanoHTTPD {
 
     private int port;
-    private String hostname;
     private Context context;
     private Router router;
 
-    public AndroidWebServer(Context context, int port) {
+    AndroidWebServer(Context context, int port) {
         super(port);
-        init(context, port);
-    }
-
-    public AndroidWebServer(Context context, String hostname, int port) {
-        super(hostname, port);
-        this.hostname = hostname;
         init(context, port);
     }
 
@@ -63,19 +56,14 @@ public class AndroidWebServer extends NanoHTTPD {
     public void stopServer() {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(0);
-        hostname = null;
         stop();
     }
 
     private String getIpAccess() {
-        if (hostname == null) {
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-            int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
-            final String formatedIpAddress = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
-            hostname = "http://" + formatedIpAddress + ":" + port;
-        }
-
-        return hostname;
+        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+        int ipAddress = wifiManager.getConnectionInfo().getIpAddress();
+        final String formatedIpAddress = String.format("%d.%d.%d.%d", (ipAddress & 0xff), (ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+        return "http://" + formatedIpAddress + ":" + port;
     }
 
     public void setDBName(String dbName) {

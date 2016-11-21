@@ -1,14 +1,14 @@
-package com.ebr163.webserver.manager.util;
+package com.ebr163.probetools.manager.util;
 
 import android.content.Context;
 
-import com.ebr163.webserver.manager.AssetsManager;
-import com.ebr163.webserver.manager.BaseManager;
-import com.ebr163.webserver.manager.DBManager;
-import com.ebr163.webserver.manager.HttpInterceptManager;
-import com.ebr163.webserver.manager.IndexManager;
-import com.ebr163.webserver.manager.PreferencesManager;
-import com.ebr163.webserver.manager.TransitionManager;
+import com.ebr163.probetools.manager.AssetsManager;
+import com.ebr163.probetools.manager.BaseManager;
+import com.ebr163.probetools.manager.DBManager;
+import com.ebr163.probetools.manager.HttpInterceptManager;
+import com.ebr163.probetools.manager.IndexManager;
+import com.ebr163.probetools.manager.PreferencesManager;
+import com.ebr163.probetools.manager.TransitionManager;
 
 /**
  * Created by mac1 on 02.11.16.

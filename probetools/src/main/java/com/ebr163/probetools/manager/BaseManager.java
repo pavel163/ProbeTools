@@ -1,6 +1,6 @@
-package com.ebr163.webserver.manager;
+package com.ebr163.probetools.manager;
 
-import com.ebr163.webserver.Router;
+import com.ebr163.probetools.Router;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

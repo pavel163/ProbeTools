@@ -1,24 +1,20 @@
 package com.ebr163.probeapp;
 
 import android.app.Application;
-import android.content.SharedPreferences;
 import android.database.SQLException;
 
 import com.ebr163.probeapp.service.DataBaseHelper;
+import com.ebr163.probetools.Probetools;
 
 import java.io.IOException;
 
 public class BaseApplication extends Application {
 
     public static DataBaseHelper myDbHelper;
-    public static SharedPreferences sharedPreferences;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        sharedPreferences = getSharedPreferences("pref", MODE_PRIVATE);
-        SharedPreferences.Editor ed = sharedPreferences.edit();
-        ed.apply();
 
         myDbHelper = new DataBaseHelper(this);
 
@@ -33,6 +29,11 @@ public class BaseApplication extends Application {
         } catch (SQLException sqle) {
             throw sqle;
         }
+
+        Probetools.init(this);
+        Probetools.setPreferences(getSharedPreferences("pref", MODE_PRIVATE));
+        Probetools.setDBName(DataBaseHelper.DB_NAME);
+        Probetools.setSQLiteOpenHelper(myDbHelper);
     }
 
 

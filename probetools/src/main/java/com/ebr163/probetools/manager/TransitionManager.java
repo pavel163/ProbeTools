@@ -1,4 +1,4 @@
-package com.ebr163.webserver.manager;
+package com.ebr163.probetools.manager;
 
 import java.io.IOException;
 

@@ -1,16 +1,17 @@
-package com.ebr163.webserver;
+package com.ebr163.probetools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
-import com.ebr163.webserver.manager.AssetsManager;
-import com.ebr163.webserver.manager.BaseManager;
-import com.ebr163.webserver.manager.DBManager;
-import com.ebr163.webserver.manager.IndexManager;
-import com.ebr163.webserver.manager.PreferencesManager;
-import com.ebr163.webserver.manager.TransitionManager;
-import com.ebr163.webserver.manager.util.ManagerFactory;
+import com.ebr163.probetools.manager.AssetsManager;
+import com.ebr163.probetools.manager.BaseManager;
+import com.ebr163.probetools.manager.DBManager;
+import com.ebr163.probetools.manager.IndexManager;
+import com.ebr163.probetools.manager.PreferencesManager;
+import com.ebr163.probetools.manager.TransitionManager;
+import com.ebr163.probetools.manager.util.ManagerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,6 +66,10 @@ public class Router {
     }
 
     public SharedPreferences getPreferences() {
+        if (preferences == null){
+            return PreferenceManager.getDefaultSharedPreferences(context);
+        }
+
         return preferences;
     }
 

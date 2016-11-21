@@ -1,4 +1,4 @@
-package com.ebr163.webserver;
+package com.ebr163.probetools;
 
 import org.junit.Test;
 
