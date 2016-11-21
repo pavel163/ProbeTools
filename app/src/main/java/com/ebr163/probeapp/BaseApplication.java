@@ -1,7 +1,6 @@
 package com.ebr163.probeapp;
 
 import android.app.Application;
-import android.database.SQLException;
 
 import com.ebr163.probeapp.service.DataBaseHelper;
 import com.ebr163.probetools.Probetools;
@@ -10,13 +9,11 @@ import java.io.IOException;
 
 public class BaseApplication extends Application {
 
-    public static DataBaseHelper myDbHelper;
-
     @Override
     public void onCreate() {
         super.onCreate();
 
-        myDbHelper = new DataBaseHelper(this);
+        DataBaseHelper myDbHelper = new DataBaseHelper(this);
 
         try {
             myDbHelper.createDataBase();
@@ -24,11 +21,7 @@ public class BaseApplication extends Application {
             throw new Error("Unable to create database");
         }
 
-        try {
-            myDbHelper.openDataBase();
-        } catch (SQLException sqle) {
-            throw sqle;
-        }
+        myDbHelper.openDataBase();
 
         Probetools.init(this);
         Probetools.setPreferences(getSharedPreferences("pref", MODE_PRIVATE));
