@@ -126,11 +126,14 @@
 
         $.get( "/preferences/loadAll")
             .done(function(data) {
-              loadPreferences(data)
-        })
+                loadPreferences(data)
+            })
+            .fail(function(){
+                preloadOff()
+            });
 
         $('#add').on('click', function(){
-            preload0n
+            preload0n()
             var obj = new Object();
             obj.key = $('#pref_name').val();
             obj.value  = $('#pref_value').val();
@@ -139,7 +142,7 @@
         })
 
         $('#save').on('click', function(){
-            preload0n
+            preload0n()
             var obj = new Object();
             obj.key = $('#pref_key_edit').val();
             obj.value  = $('#pref_value_edit').val();

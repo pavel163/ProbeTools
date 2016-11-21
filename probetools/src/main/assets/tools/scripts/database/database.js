@@ -6,7 +6,10 @@ function loadTableNames(){
                     $('#tables').append($("<option></option>").text(data[i]))
                 }
                 $('#tables').material_select()
-        })
+                })
+            .fail(function(){
+                preloadOff()
+            });
 }
 
 function loadTable(data){
@@ -22,7 +25,10 @@ function loadTable(data){
                             columns: data.column,
                             data: data.data
                         })
-             })
+                    })
+                    .fail(function(){
+                        preloadOff()
+                    });
         }
 }
 

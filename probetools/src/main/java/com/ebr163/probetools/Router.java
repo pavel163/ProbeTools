@@ -67,7 +67,7 @@ public class Router {
 
     public SharedPreferences getPreferences() {
         if (preferences == null){
-            return PreferenceManager.getDefaultSharedPreferences(context);
+            preferences = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
         return preferences;

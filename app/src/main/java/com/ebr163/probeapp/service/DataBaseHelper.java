@@ -18,7 +18,7 @@ import java.io.OutputStream;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static String DB_PATH = "/data/data/com.ebr163.dbeditor/databases/";
-    public static String DB_NAME = "marm2";
+    public static String DB_NAME = "mchs.db";
     private SQLiteDatabase myDataBase;
     private final Context mContext;
 

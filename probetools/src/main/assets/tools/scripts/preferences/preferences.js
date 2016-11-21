@@ -20,8 +20,8 @@ function loadPreferences(preferences){
         $('#'+preferences[i].key).on('click', function(){
                     $("#pref_key_edit").val(this.id)
         })
-        preloadOff()
     }
+    preloadOff()
 }
 
 function editPreference(data){
