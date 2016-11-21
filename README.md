@@ -58,6 +58,9 @@ For replacement use:
 Probetools.setPreferences(getSharedPreferences("pref", MODE_PRIVATE));
 ```
 
+## Dependency
+- Gson
+
 License
 --------
 
