@@ -2,8 +2,9 @@
 
 ProbeTools displays the data from the Database and SharedPreferences in the browser.
 
-<p align="center"><img src ="https://github.com/pavel163/ProbeTools/blob/master/1.png" width="350"/>
-<img src ="https://github.com/pavel163/ProbeTools/blob/master/2.png" width="350"/>
+<p align="center"><img style="padding-left:20px" src ="https://github.com/pavel163/ProbeTools/blob/master/1.png" width="350"/>
+
+<img style="padding-left:20px" src ="https://github.com/pavel163/ProbeTools/blob/master/2.png" width="350"/>
 </p>
 
 #### Opportunities
