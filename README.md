@@ -2,8 +2,16 @@
 
 ProbeTools displays the data from the Database and SharedPreferences in the browser.
 
+#### Opportunities
+1. Viewing SharedPreferences.
+2. Add new variables and change the old variables in SharedPreferences.
+3. Upload database.
+4. Viewing tables.
+5. Create sql request.
+
+
 ## Setup
-##### 1. To add it to your project, include the following in your **project** `build.gradle` file:
+#### 1. To add it to your project, include the following in your **project** `build.gradle` file:
 ```groovy
 allprojects {
 		repositories {
@@ -12,13 +20,13 @@ allprojects {
 		}
 	}
 ```
-##### 2. And on your **app module** `build.gradle`:
+#### 2. And on your **app module** `build.gradle`:
 
 ```groovy
 compile 'com.github.pavel163:ProbeTools:1.0.0'
 ```
 
-##### or Maven:
+#### or Maven:
 ```xml
 <dependency>
 	    <groupId>com.github.pavel163</groupId>
@@ -27,7 +35,7 @@ compile 'com.github.pavel163:ProbeTools:1.0.0'
 	</dependency>
 ```
 
-##### 3. In your `Application` class:
+#### 3. In your `Application` class:
 
 ```java
 public class MyApplication extends Application {
