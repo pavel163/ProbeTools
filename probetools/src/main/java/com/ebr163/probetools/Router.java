@@ -81,7 +81,7 @@ public class Router {
         this.sqLiteOpenHelper = sqLiteOpenHelper;
     }
 
-    public NanoHTTPD.Response route(NanoHTTPD.IHTTPSession session) throws Exception {
+    NanoHTTPD.Response route(NanoHTTPD.IHTTPSession session) throws Exception {
         if (session.getUri().contains(".html") && "GET".equals(session.getMethod().name())) {
             return getManager(TransitionManager.class).transition(session);
         } else if (session.getUri().matches("/assets/.*")) {

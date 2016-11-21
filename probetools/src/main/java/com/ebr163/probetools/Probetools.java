@@ -22,7 +22,7 @@ public class Probetools {
         startServer();
     }
 
-    public static void startServer(){
+    private static void startServer() {
         if (androidWebServer != null){
             try {
                 androidWebServer.startSever();

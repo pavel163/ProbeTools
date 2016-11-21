@@ -41,7 +41,7 @@ final class AndroidWebServer extends NanoHTTPD {
         }
     }
 
-    public void startSever() throws IOException {
+    void startSever() throws IOException {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification.Builder notificationBuilder = new Notification.Builder(context)
                 .setSmallIcon(R.drawable.server)
@@ -53,7 +53,7 @@ final class AndroidWebServer extends NanoHTTPD {
         start();
     }
 
-    public void stopServer() {
+    void stopServer() {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(0);
         stop();
@@ -66,7 +66,7 @@ final class AndroidWebServer extends NanoHTTPD {
         return "http://" + formatedIpAddress + ":" + port;
     }
 
-    public void setDBName(String dbName) {
+    void setDBName(String dbName) {
         router.setDBName(dbName);
     }
 
@@ -74,7 +74,7 @@ final class AndroidWebServer extends NanoHTTPD {
         router.setPreferences(preferences);
     }
 
-    public void setSQLiteOpenHelper(SQLiteOpenHelper sqLiteOpenHelper) {
+    void setSQLiteOpenHelper(SQLiteOpenHelper sqLiteOpenHelper) {
         router.setSqLiteOpenHelper(sqLiteOpenHelper);
     }
 }
