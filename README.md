@@ -46,7 +46,9 @@ compile 'com.github.pavel163:ProbeTools:1.0.0'
 public class MyApplication extends Application {
   public void onCreate() {
     super.onCreate();
-    ProbeTools.init(this);
+    if (BuildConfig.DEBUG){
+        Probetools.init(this);
+    }
   }
 }
 ```
