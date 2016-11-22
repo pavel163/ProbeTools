@@ -28,7 +28,7 @@ allprojects {
 #### 2. And on your **app module** `build.gradle`:
 
 ```groovy
-compile 'com.github.pavel163:ProbeTools:1.0.0'
+compile 'com.github.pavel163:ProbeTools:1.0.1'
 ```
 
 #### or Maven:
@@ -36,7 +36,7 @@ compile 'com.github.pavel163:ProbeTools:1.0.0'
 <dependency>
 	    <groupId>com.github.pavel163</groupId>
 	    <artifactId>ProbeTools</artifactId>
-	    <version>1.0.0</version>
+	    <version>1.0.1</version>
 	</dependency>
 ```
 
@@ -64,9 +64,6 @@ For replacement use:
 ```java
 Probetools.setPreferences(getSharedPreferences("pref", MODE_PRIVATE));
 ```
-
-## Dependency
-- Gson
 
 License
 --------
