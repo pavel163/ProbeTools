@@ -5,13 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
@@ -43,32 +44,32 @@ public class DBManager extends BaseManager {
         SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
         Cursor c = sqLiteDatabase.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
-        List<String> tables = new ArrayList<>();
+        JSONArray tables = new JSONArray();
         if (c.moveToFirst()) {
             while (!c.isAfterLast()) {
-                tables.add(c.getString(0));
+                tables.put(c.getString(0));
                 c.moveToNext();
             }
         }
 
         getRouter().getSqLiteOpenHelper().close();
-        return responseStringAsJson(gson.toJson(tables));
+        return responseStringAsJson(tables.toString());
     }
 
-    public NanoHTTPD.Response loadTable(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response loadTable(NanoHTTPD.IHTTPSession session) throws JSONException {
         String table = session.getParameters().get(TABLE).get(0);
         String[] columnTypes = getAllColumnTypes(table);
 
         SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
         Cursor dbCursor = sqLiteDatabase.query(table, null, null, null, null, null, null);
 
-        Map<String, List<Map<String, String>>> result = new HashMap<>();
-        result.put(COLUMN, dumpColumnNames(dbCursor, columnTypes));
-        result.put(DATA, dumpData(dbCursor));
+        JSONObject result = new JSONObject();
+        result.put(COLUMN, getColumnNames(dbCursor, columnTypes));
+        result.put(DATA, getData(dbCursor));
 
         dbCursor.close();
         getRouter().getSqLiteOpenHelper().close();
-        return responseStringAsJson(gson.toJson(result));
+        return responseStringAsJson(result.toString());
     }
 
     private String[] getAllColumnTypes(String table) {
@@ -85,7 +86,7 @@ public class DBManager extends BaseManager {
         return columnTypes;
     }
 
-    public NanoHTTPD.Response runSQL(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response runSQL(NanoHTTPD.IHTTPSession session) throws JSONException {
         try {
             session.parseBody(new HashMap<String, String>());
         } catch (IOException | NanoHTTPD.ResponseException e) {
@@ -96,43 +97,43 @@ public class DBManager extends BaseManager {
         SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
 
-        Map<String, Object> result = new HashMap<>();
-        result.put(COLUMN, dumpColumnNames(cursor, null));
-        result.put(DATA, dumpData(cursor));
+        JSONObject result = new JSONObject();
+        result.put(COLUMN, getColumnNames(cursor, null));
+        result.put(DATA, getData(cursor));
 
         sqLiteDatabase.close();
-        return responseStringAsJson(gson.toJson(result));
+        return responseStringAsJson(result.toString());
     }
 
-    private List<Map<String, String>> dumpData(Cursor cursor) {
-        List<Map<String, String>> datas = new ArrayList<>();
+    private JSONArray getData(Cursor cursor) throws JSONException {
+        JSONArray datas = new JSONArray();
         String[] columnNames = cursor.getColumnNames();
         if (cursor.moveToFirst()) {
             do {
-                Map<String, String> data = new HashMap<>();
+                JSONObject data = new JSONObject();
                 for (String columnName : columnNames) {
                     // TODO: 16.11.16 сделать обработку BLOB
                     data.put(columnName, cursor.getString(cursor.getColumnIndex(columnName)));
                 }
-                datas.add(data);
+                datas.put(data);
             } while (cursor.moveToNext());
         } else
             Log.d("cursor", "0 rows");
         return datas;
     }
 
-    private List<Map<String, String>> dumpColumnNames(Cursor cursor, String[] columnTypes) {
+    private JSONArray getColumnNames(Cursor cursor, String[] columnTypes) throws JSONException {
         String[] columnNames = cursor.getColumnNames();
-        List<Map<String, String>> colums = new ArrayList<>();
+        JSONArray colums = new JSONArray();
         for (int i = 0; i < columnNames.length; i++) {
-            Map<String, String> column = new HashMap<>();
+            JSONObject column = new JSONObject();
             column.put(FIELD, columnNames[i]);
             if (columnTypes != null && columnTypes[i] != null) {
                 column.put(TITLE, columnNames[i] + " (" + columnTypes[i] + ") ");
             } else {
                 column.put(TITLE, columnNames[i]);
             }
-            colums.add(column);
+            colums.put(column);
         }
         return colums;
     }

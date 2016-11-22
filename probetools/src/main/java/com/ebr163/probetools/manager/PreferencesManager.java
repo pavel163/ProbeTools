@@ -2,31 +2,32 @@ package com.ebr163.probetools.manager;
 
 import android.content.SharedPreferences;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
 public class PreferencesManager extends TransitionManager {
 
-
-    public NanoHTTPD.Response loadAllPreferences(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response loadAllPreferences(NanoHTTPD.IHTTPSession session) throws JSONException {
         Map<String, ?> params = getRouter().getPreferences().getAll();
-        List<Map<String, String>> preferences = new ArrayList<>();
+        JSONArray preferences = new JSONArray();
         for (Map.Entry<String, ?> param : params.entrySet()) {
-            Map<String, String> preference = new HashMap<>();
+            JSONObject preference = new JSONObject();
             preference.put("key", param.getKey());
             preference.put("value", String.valueOf(param.getValue()));
             preference.put("type", param.getValue().getClass().getSimpleName());
-            preferences.add(preference);
+            preferences.put(preference);
         }
 
-        return responseStringAsJson(gson.toJson(preferences));
+        return responseStringAsJson(preferences.toString());
     }
 
-    public NanoHTTPD.Response addPreference(NanoHTTPD.IHTTPSession session) {
+    public NanoHTTPD.Response addPreference(NanoHTTPD.IHTTPSession session) throws JSONException {
         try {
             session.parseBody(new HashMap<String, String>());
             SharedPreferences.Editor ed = getRouter().getPreferences().edit();
@@ -52,11 +53,11 @@ public class PreferencesManager extends TransitionManager {
             return null;
         }
 
-        return responseStringAsJson(gson.toJson(createSuccessAnswer(session)));
+        return responseStringAsJson(createSuccessAnswer(session).toString());
     }
 
-    private Map<String, String> createSuccessAnswer(NanoHTTPD.IHTTPSession session) {
-        Map<String, String> preference = new HashMap<>();
+    private JSONObject createSuccessAnswer(NanoHTTPD.IHTTPSession session) throws JSONException {
+        JSONObject preference = new JSONObject();
         preference.put("key", session.getParameters().get("key").get(0));
         preference.put("value", session.getParameters().get("value").get(0));
         preference.put("type", session.getParameters().get("type").get(0));
