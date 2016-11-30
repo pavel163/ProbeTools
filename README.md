@@ -64,6 +64,9 @@ For replacement use:
 ```java
 Probetools.setPreferences(getSharedPreferences("pref", MODE_PRIVATE));
 ```
+Open the browser and go to ip address in notification
+<p align="center"><img style="padding-left:20px" src ="https://github.com/pavel163/ProbeTools/blob/master/Screenshot_20161130-170820.png" width="250"/>
+</p>
 
 License
 --------
