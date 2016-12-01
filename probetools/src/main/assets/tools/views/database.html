@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
     <script src="/assets/libs/bootstrap-table/bootstrap-table.js"></script>
     <script src="/assets/scripts/database/database.js"></script>
     <script src="/assets/scripts/utils/preload.js"></script>
     <script src="/assets/libs/ace-builds/src-noconflict/ace.js" type="text/javascript"
             charset="utf-8"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 
     <meta charset="utf-8">
     <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
     <link rel="stylesheet" href="/assets/styles/tools.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 </head>
 <body>
 <nav>
@@ -38,9 +40,7 @@
     </select>
 </div>
 
-<div style="height:600px; overflow-x:scroll; overflow:scroll">
-    <table id="table" class="bordered"></table>
-</div>
+<table id="example" class="display" width="100%"></table>
 
 <ul id="slide-out" class="side-nav">
     <li><a href="/"><i class="material-icons">settings</i>SharedPreferences</a></li>
@@ -58,6 +58,13 @@
 </div>
 
 <script type="text/javascript">
+        var datatable = $('#example').DataTable({
+            "ordering": false,
+            columns: [
+                { title: "Name" },
+            ]
+        });
+
         $(".button-collapse").sideNav()
         $('select').material_select()
         $('.modal').modal()
@@ -81,6 +88,7 @@
             obj.sql = editor.getValue()
             runSQL(obj)
         })
+
 
 </script>
 </body>

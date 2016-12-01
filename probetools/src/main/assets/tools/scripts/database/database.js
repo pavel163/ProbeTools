@@ -20,11 +20,17 @@ function loadTable(data){
             $.get( "/loadTable", data)
                     .done(function(data) {
                         preloadOff()
-                        $('#table').bootstrapTable("destroy")
-                        $('#table').bootstrapTable({
-                            columns: data.column,
-                            data: data.data
-                        })
+//                        $('#table').bootstrapTable("destroy")
+//                        $('#table').bootstrapTable({
+//                            columns: data.column,
+//                            data: data.data
+//                        })
+                        datatable.destroy();
+                        $('#example').empty();
+                        datatable = $('#example').DataTable( {
+                                data: data.data,
+                                columns: data.column
+                            } );
                     })
                     .fail(function(){
                         preloadOff()

@@ -18,12 +18,12 @@ import java.io.OutputStream;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static String DB_PATH = "/data/data/com.ebr163.dbeditor/databases/";
-    public static String DB_NAME = "mchs.db";
+    public static String DB_NAME = "marm2";
     private SQLiteDatabase myDataBase;
     private final Context mContext;
 
     public DataBaseHelper(Context context) {
-        super(context, DB_NAME, null, 1);
+        super(context, DB_NAME, null, 11);
         this.mContext = context;
     }
 

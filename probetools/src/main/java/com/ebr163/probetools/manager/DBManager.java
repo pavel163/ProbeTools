@@ -77,7 +77,7 @@ public class DBManager extends BaseManager {
         Cursor cursor = sqLiteDatabase.rawQuery("PRAGMA table_info(" + table + ")", null);
         String[] columnTypes = new String[cursor.getCount()];
         int i = 0;
-        while (cursor.moveToNext() && i < columnTypes.length) {
+        while (cursor.moveToNext()) {
             columnTypes[i] = cursor.getString(cursor.getColumnIndexOrThrow("type"));
             i++;
         }
@@ -110,10 +110,10 @@ public class DBManager extends BaseManager {
         String[] columnNames = cursor.getColumnNames();
         if (cursor.moveToFirst()) {
             do {
-                JSONObject data = new JSONObject();
+                JSONArray data = new JSONArray();
                 for (String columnName : columnNames) {
                     // TODO: 16.11.16 сделать обработку BLOB
-                    data.put(columnName, cursor.getString(cursor.getColumnIndex(columnName)));
+                    data.put(cursor.getString(cursor.getColumnIndex(columnName)));
                 }
                 datas.put(data);
             } while (cursor.moveToNext());
@@ -127,12 +127,13 @@ public class DBManager extends BaseManager {
         JSONArray colums = new JSONArray();
         for (int i = 0; i < columnNames.length; i++) {
             JSONObject column = new JSONObject();
-            column.put(FIELD, columnNames[i]);
-            if (columnTypes != null && columnTypes[i] != null) {
-                column.put(TITLE, columnNames[i] + " (" + columnTypes[i] + ") ");
-            } else {
-                column.put(TITLE, columnNames[i]);
-            }
+//            column.put(FIELD, columnNames[i]);
+//            if (columnTypes != null && columnTypes[i] != null) {
+//                column.put(TITLE, columnNames[i] + " (" + columnTypes[i] + ")");
+//            } else {
+//
+//            }
+            column.put(TITLE, columnNames[i]);
             colums.put(column);
         }
         return colums;
