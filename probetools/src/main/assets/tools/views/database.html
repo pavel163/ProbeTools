@@ -3,7 +3,6 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
-    <script src="/assets/libs/bootstrap-table/bootstrap-table.js"></script>
     <script src="/assets/scripts/database/database.js"></script>
     <script src="/assets/scripts/utils/preload.js"></script>
     <script src="/assets/libs/ace-builds/src-noconflict/ace.js" type="text/javascript"
@@ -12,13 +11,19 @@
 
     <meta charset="utf-8">
     <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
-    <link rel="stylesheet" href="/assets/libs/bootstrap-table/bootstrap-table.css">
     <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
     <link rel="stylesheet" href="/assets/styles/tools.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 </head>
 <body>
+<ul id="dropdown1" class="dropdown-content">
+    <li><a href="#!">one</a></li>
+    <li><a href="#!">two</a></li>
+    <li class="divider"></li>
+    <li><a href="#!">three</a></li>
+</ul>
+
 <nav>
     <div class="nav-wrapper">
         <a class="brand-logo"><i data-activates="slide-out" class="material-icons button-collapse">menu</i>Database</a>
@@ -26,6 +31,10 @@
             <li><a href="#modal1" title="New SQL"><i class="material-icons">keyboard</i></a>
             <li><a href="db/download/database" title="Load DB"><i class="material-icons">file_download</i></a>
             </li>
+        </ul>
+        <ul class="center hide-on-med-and-down">
+            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i
+                    class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
     </div>
     <div class="progress" id="progress" style="margin:0">
@@ -40,7 +49,7 @@
     </select>
 </div>
 
-<table id="example" class="display" width="100%"></table>
+<table id="tabledb" class="cell-border" cellspacing="0" width="100%"></table>
 
 <ul id="slide-out" class="side-nav">
     <li><a href="/"><i class="material-icons">settings</i>SharedPreferences</a></li>
@@ -58,37 +67,39 @@
 </div>
 
 <script type="text/javascript">
-        var datatable = $('#example').DataTable({
-            "ordering": false,
+        var datatable = $('#tabledb').DataTable({
+            "scrollY": 500,
+            "scrollX": true,
+            "lengthChange": false,
             columns: [
-                { title: "Name" },
+                { title: "Name" }
             ]
         });
 
-        $(".button-collapse").sideNav()
-        $('select').material_select()
-        $('.modal').modal()
+        $(".button-collapse").sideNav();
+        $('select').material_select();
+        $('.modal').modal();
+        $('ul').dropdown();
 
-        var editor = ace.edit("editor")
-        editor.setTheme("ace/theme/chrome")
-        editor.getSession().setMode("ace/mode/sql")
+        var editor = ace.edit("editor");
+        editor.setTheme("ace/theme/chrome");
+        editor.getSession().setMode("ace/mode/sql");
 
-        loadTableNames()
+        loadTableNames();
 
         $( "select" ).change(function() {
-            var data = {}
-            preload0n()
-            data.table = $('#tables').val()
+            var data = {};
+            preload0n();
+            data.table = $('#tables').val();
             loadTable(data)
         });
 
         $('#run').on('click', function(){
-            preload0n()
-            var obj = new Object()
-            obj.sql = editor.getValue()
+            preload0n();
+            var obj = new Object();
+            obj.sql = editor.getValue();
             runSQL(obj)
-        })
-
+        });
 
 </script>
 </body>
