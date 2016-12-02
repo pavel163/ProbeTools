@@ -28,7 +28,7 @@ allprojects {
 #### 2. And on your **app module** `build.gradle`:
 
 ```groovy
-compile 'com.github.pavel163:ProbeTools:1.0.1'
+compile 'com.github.pavel163:ProbeTools:1.1.0'
 ```
 
 #### or Maven:
