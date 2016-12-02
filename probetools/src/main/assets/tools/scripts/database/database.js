@@ -27,45 +27,42 @@ function loadTableNames(){
 }
 
 function loadTable(data){
-        if (data.table == 'Sql'){
-            preloadOff()
-        } else{
-            $.get( "/loadTable", data)
-                    .done(function(data) {
-                        preloadOff()
-                        datatable.destroy();
-                        $('#tabledb').empty();
-                        datatable = $('#tabledb').DataTable({
-                            "scrollY": 500,
-                            "scrollX": true,
-                            "lengthChange": false,
-                            data: data.data,
-                            columns: data.column
-                        });
-                    })
-                    .fail(function(){
-                        preloadOff()
-                    });
-        }
+        $.get("/loadTable", data)
+            .done(function(data) {
+                createNewTable(data)
+                preloadOff()
+            })
+            .fail(function(){
+                preloadOff()
+            });
 }
 
 function runSQL(data){
         $.post( "/runSQL", data)
             .done(function(data) {
-                $('#tables').val('Sql')
-                $('#tables').material_select();
-
-                preloadOff()
-                $('#table').bootstrapTable("destroy")
-                $('#table').bootstrapTable({
-                     columns: data.column,
-                     data: data.data
-                })
-
-               Materialize.toast('Success', 3000)
+                if (data.column != 0) {
+                    createNewTable(data);
+                } else {
+                    var data = {};
+                    data.table = $('.brand-logo').text().replace('menu', '');
+                    loadTable(data);
+                }
+                preloadOff();
+                Materialize.toast('Success', 3000);
             })
             .fail(function(){
-                preloadOff()
-                Materialize.toast('Error. Bad sql', 3000)
+                preloadOff();
+                Materialize.toast('Error. Bad sql', 3000);
             });
+}
+
+function createNewTable(data){
+    datatable.destroy();
+    $('#tabledb').empty();
+    datatable = $('#tabledb').DataTable({
+        "scrollX": true,
+        "lengthChange": false,
+        data: data.data,
+        columns: data.column
+    });
 }
