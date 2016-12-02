@@ -17,6 +17,9 @@ public class Probetools {
 
     private static AndroidWebServer androidWebServer;
 
+    private Probetools() {
+    }
+
     public static void init(Context context) {
         androidWebServer = new AndroidWebServer(context, 8080);
         startServer();

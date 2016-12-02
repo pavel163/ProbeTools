@@ -20,9 +20,7 @@ import static fi.iki.elonen.NanoHTTPD.newChunkedResponse;
 
 public class DBManager extends BaseManager {
 
-    private Context context;
     private static final String TABLE = "table";
-    private static final String FIELD = "field";
     private static final String TITLE = "title";
     private static final String COLUMN = "column";
     private static final String DATA = "data";
@@ -127,12 +125,6 @@ public class DBManager extends BaseManager {
         JSONArray colums = new JSONArray();
         for (int i = 0; i < columnNames.length; i++) {
             JSONObject column = new JSONObject();
-//            column.put(FIELD, columnNames[i]);
-//            if (columnTypes != null && columnTypes[i] != null) {
-//                column.put(TITLE, columnNames[i] + " (" + columnTypes[i] + ")");
-//            } else {
-//
-//            }
             column.put(TITLE, columnNames[i]);
             colums.put(column);
         }

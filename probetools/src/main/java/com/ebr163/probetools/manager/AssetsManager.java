@@ -25,7 +25,7 @@ public class AssetsManager extends BaseManager {
             final String path = session.getUri().replace("/assets/", "tools/");
             return assetByPath(path);
         } catch (Exception exception) {
-            throw new Exception("Нет контроллера");
+            throw new Exception("Manager not found");
         }
     }
 

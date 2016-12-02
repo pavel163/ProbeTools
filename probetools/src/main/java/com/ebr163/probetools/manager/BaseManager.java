@@ -1,5 +1,7 @@
 package com.ebr163.probetools.manager;
 
+import android.content.Context;
+
 import com.ebr163.probetools.Router;
 
 import fi.iki.elonen.NanoHTTPD;
@@ -13,6 +15,7 @@ import static fi.iki.elonen.NanoHTTPD.newFixedLengthResponse;
 public abstract class BaseManager {
 
     private Router router;
+    protected Context context;
 
     Router getRouter() {
         return router;

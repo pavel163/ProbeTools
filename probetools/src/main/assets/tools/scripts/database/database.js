@@ -4,9 +4,23 @@ function loadTableNames(){
                 preloadOff()
                 for (i = 0; i < data.length; i++) {
                     $('#tables').append($("<option></option>").text(data[i]))
+                    $('#dropdown_tables').append(
+                        $('<li>').attr('id', data[i]).append($('<span>').attr('class', 'tab').append(data[i])));
+                        $('#'+data[i]).on("click", function(event){
+                            $('.brand-logo').html('<i data-activates="slide-out" class="material-icons button-collapse">menu</i>' + this.id);
+                            $(".button-collapse").sideNav();
+                            var data = {};
+                            preload0n();
+                            data.table = this.id;
+                            loadTable(data);
+                        });
                 }
                 $('#tables').material_select()
+                $(".dropdown-button").dropdown({
+                   constrain_width: false,
+                   belowOrigin: true,
                 })
+             })
             .fail(function(){
                 preloadOff()
             });
@@ -14,7 +28,6 @@ function loadTableNames(){
 
 function loadTable(data){
         if (data.table == 'Sql'){
-            $('#table').bootstrapTable("destroy")
             preloadOff()
         } else{
             $.get( "/loadTable", data)
@@ -25,11 +38,10 @@ function loadTable(data){
                         datatable = $('#tabledb').DataTable({
                             "scrollY": 500,
                             "scrollX": true,
+                            "lengthChange": false,
                             data: data.data,
                             columns: data.column
                         });
-                        $('#tabledb_length').material_select()
-                        $('ul').dropdown();
                     })
                     .fail(function(){
                         preloadOff()

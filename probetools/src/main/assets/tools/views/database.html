@@ -17,37 +17,25 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
 </head>
 <body>
-<ul id="dropdown1" class="dropdown-content">
-    <li><a href="#!">one</a></li>
-    <li><a href="#!">two</a></li>
-    <li class="divider"></li>
-    <li><a href="#!">three</a></li>
+
+<ul id="dropdown_tables" class="dropdown-content">
 </ul>
 
 <nav>
     <div class="nav-wrapper">
         <a class="brand-logo"><i data-activates="slide-out" class="material-icons button-collapse">menu</i>Database</a>
         <ul class="right hide-on-med-and-down">
+            <li><a class="dropdown-button" href="" data-activates="dropdown_tables">Select table<i
+                    class="material-icons right">arrow_drop_down</i></a></li>
             <li><a href="#modal1" title="New SQL"><i class="material-icons">keyboard</i></a>
             <li><a href="db/download/database" title="Load DB"><i class="material-icons">file_download</i></a>
             </li>
-        </ul>
-        <ul class="center hide-on-med-and-down">
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i
-                    class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
     </div>
     <div class="progress" id="progress" style="margin:0">
         <div class="indeterminate"></div>
     </div>
 </nav>
-
-<div class="row" style="margin-right: 10%; margin-left: 10%; margin-top: 15px;">
-    <label>Table</label>
-    <select id="tables" name="table">
-        <option>Sql</option>
-    </select>
-</div>
 
 <table id="tabledb" class="cell-border" cellspacing="0" width="100%"></table>
 
@@ -77,22 +65,13 @@
         });
 
         $(".button-collapse").sideNav();
-        $('select').material_select();
         $('.modal').modal();
-        $('ul').dropdown();
 
         var editor = ace.edit("editor");
         editor.setTheme("ace/theme/chrome");
         editor.getSession().setMode("ace/mode/sql");
 
         loadTableNames();
-
-        $( "select" ).change(function() {
-            var data = {};
-            preload0n();
-            data.table = $('#tables').val();
-            loadTable(data)
-        });
 
         $('#run').on('click', function(){
             preload0n();
