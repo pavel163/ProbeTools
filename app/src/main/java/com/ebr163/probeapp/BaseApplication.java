@@ -25,8 +25,8 @@ public class BaseApplication extends Application {
 
         Probetools.init(this);
         Probetools.setPreferences(getSharedPreferences("pref", MODE_PRIVATE));
-        Probetools.setDBName(DataBaseHelper.DB_NAME);
-        Probetools.setSQLiteOpenHelper(myDbHelper);
+        Probetools.setDBName(DataBaseHelper.DB_NAME, 11);
+//        Probetools.setSQLiteOpenHelper(myDbHelper);
     }
 
 

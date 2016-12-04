@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.wifi.WifiManager;
 
+import com.ebr163.probetools.database.ProbeOpenHelper;
+
 import java.io.IOException;
 
 import fi.iki.elonen.NanoHTTPD;
@@ -68,6 +70,12 @@ final class AndroidWebServer extends NanoHTTPD {
 
     void setDBName(String dbName) {
         router.setDBName(dbName);
+        setSQLiteOpenHelper(new ProbeOpenHelper(context, dbName, 1));
+    }
+
+    void setDBName(String dbName, int dbVersion) {
+        router.setDBName(dbName);
+        setSQLiteOpenHelper(new ProbeOpenHelper(context, dbName, dbVersion));
     }
 
     public void setPreferences(SharedPreferences preferences) {

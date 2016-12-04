@@ -60,4 +60,12 @@ public class Probetools {
             Log.e(TAG_ERROR, "setDBName be called before the init");
         }
     }
+
+    public static void setDBName(String dbName, int dbVersion) {
+        if (androidWebServer != null) {
+            androidWebServer.setDBName(dbName, dbVersion);
+        } else {
+            Log.e(TAG_ERROR, "setDBName be called before the init");
+        }
+    }
 }
