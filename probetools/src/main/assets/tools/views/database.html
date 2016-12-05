@@ -4,6 +4,7 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
     <script src="/assets/scripts/database/database.js"></script>
+    <script src="/assets/scripts/database/dbutil.js"></script>
     <script src="/assets/scripts/utils/preload.js"></script>
     <script src="/assets/libs/ace-builds/src-noconflict/ace.js" type="text/javascript"
             charset="utf-8"></script>
@@ -40,8 +41,20 @@
 <table id="tabledb" class="cell-border" cellspacing="0" width="100%"></table>
 
 <ul id="slide-out" class="side-nav">
-    <li><a href="/"><i class="material-icons">settings</i>SharedPreferences</a></li>
-    <li><a href="database.html"><i class="material-icons">view_agenda</i>Database</a></li>
+    <li><a href="/" class="waves-effect" style="padding-left:16px"><i class="material-icons">settings</i>SharedPreferences</a>
+    </li>
+    <li>
+        <ul class="collapsible collapsible-accordion">
+            <li>
+                <a class="collapsible-header"><i class="material-icons">view_agenda</i>Database<i
+                        class="material-icons right">arrow_drop_down</i></a>
+                <div class="collapsible-body">
+                    <ul id="databases">
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
 </ul>
 
 <div id="modal1" class="modal bottom-sheet modal-fixed-footer">
@@ -63,6 +76,8 @@
             ]
         });
 
+        loadDatabases();
+
         $(".button-collapse").sideNav();
         $('.modal').modal();
 
@@ -73,7 +88,7 @@
         loadTableNames();
 
         $('#run').on('click', function(){
-            preload0n();
+            preloadOn();
             var obj = new Object();
             obj.sql = editor.getValue();
             runSQL(obj)

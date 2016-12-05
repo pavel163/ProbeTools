@@ -5,6 +5,7 @@
     <script src="/assets/libs/materialize/js/materialize.min.js"></script>
     <script src="/assets/scripts/preferences/preferences.js"></script>
     <script src="/assets/scripts/utils/preload.js"></script>
+    <script src="/assets/scripts/database/dbutil.js"></script>
 
     <meta charset="utf-8">
     <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
@@ -26,12 +27,20 @@
 </nav>
 
 <ul id="slide-out" class="side-nav">
-    <li><a href="/" class="waves-effect"><i class="material-icons">settings</i>SharedPreferences</a>
+    <li><a href="/" class="waves-effect" style="padding-left:16px"><i class="material-icons">settings</i>SharedPreferences</a>
     </li>
-    <li><a href="database.html" class="waves-effect"><i class="material-icons">view_agenda</i>Database</a>
-    </li>
+
     <li>
-        <div class="divider"></div>
+        <ul class="collapsible collapsible-accordion">
+            <li>
+                <a class="collapsible-header"><i class="material-icons">view_agenda</i>Database<i
+                        class="material-icons right">arrow_drop_down</i></a>
+                <div class="collapsible-body">
+                    <ul id="databases">
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </li>
 </ul>
 
@@ -116,36 +125,40 @@
             }
         );
 
+        loadDatabases();
+
         $('select').material_select();
 
         $('select').on('contentChanged', function() {
             $(this).material_select();
          });
 
+        preloadOn();
         $.get( "/preferences/loadAll")
             .done(function(data) {
-                loadPreferences(data)
+                preloadOff();
+                loadPreferences(data);
             })
             .fail(function(){
-                preloadOff()
+                preloadOff();
             });
 
         $('#add').on('click', function(){
-            preload0n()
+            preloadOn();
             var obj = new Object();
             obj.key = $('#pref_name').val();
             obj.value  = $('#pref_value').val();
             obj.type = $('#pref_type').val();
-            addPreference(obj)
+            addPreference(obj);
         })
 
         $('#save').on('click', function(){
-            preload0n()
+            preloadOn();
             var obj = new Object();
             obj.key = $('#pref_key_edit').val();
             obj.value  = $('#pref_value_edit').val();
             obj.type = $('#pref_type_edit').val();
-            editPreference(obj)
+            editPreference(obj);
         })
 
 </script>

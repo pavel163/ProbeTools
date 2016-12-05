@@ -1,4 +1,4 @@
-function preload0n(){
+function preloadOn(){
     $('#progress').height('4px')
 }
 

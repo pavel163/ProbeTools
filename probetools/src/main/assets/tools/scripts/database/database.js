@@ -1,7 +1,7 @@
 function loadTableNames(){
+        preloadOn();
         $.get( "/loadTableNames")
             .done(function(data) {
-                preloadOff()
                 for (i = 0; i < data.length; i++) {
                     $('#tables').append($("<option></option>").text(data[i]))
                     $('#dropdown_tables').append(
@@ -10,7 +10,7 @@ function loadTableNames(){
                             $('.brand-logo').html('<i data-activates="slide-out" class="material-icons button-collapse">menu</i>' + this.id);
                             $(".button-collapse").sideNav();
                             var data = {};
-                            preload0n();
+                            preloadOn();
                             data.table = this.id;
                             loadTable(data);
                         });
@@ -20,24 +20,27 @@ function loadTableNames(){
                    constrain_width: false,
                    belowOrigin: true,
                 })
+                preloadOff();
              })
             .fail(function(){
-                preloadOff()
+                preloadOff();
             });
 }
 
 function loadTable(data){
+        preloadOn();
         $.get("/loadTable", data)
             .done(function(data) {
                 createNewTable(data)
-                preloadOff()
+                preloadOff();
             })
             .fail(function(){
-                preloadOff()
+                preloadOff();
             });
 }
 
 function runSQL(data){
+        preloadOn();
         $.post( "/runSQL", data)
             .done(function(data) {
                 if (data.column != 0) {

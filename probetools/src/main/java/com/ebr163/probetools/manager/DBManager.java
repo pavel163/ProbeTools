@@ -18,28 +18,40 @@ import fi.iki.elonen.NanoHTTPD;
 
 import static fi.iki.elonen.NanoHTTPD.newChunkedResponse;
 
-public class DBManager extends BaseManager {
+public class DBManager extends TransitionManager {
 
     private static final String TABLE = "table";
     private static final String TITLE = "title";
     private static final String COLUMN = "column";
     private static final String DATA = "data";
+    private String currentDatabase;
 
     public DBManager(Context context) {
         this.context = context;
     }
 
+    @Override
+    public NanoHTTPD.Response transition(NanoHTTPD.IHTTPSession session) {
+        currentDatabase = session.getParameters().get("db").get(0);
+        return transition(session.getUri());
+    }
+
     public NanoHTTPD.Response download(NanoHTTPD.IHTTPSession session) {
         try {
-            InputStream is = new FileInputStream(context.getDatabasePath(getRouter().getDbName()));
+            InputStream is = new FileInputStream(context.getDatabasePath(currentDatabase));
             return newChunkedResponse(NanoHTTPD.Response.Status.OK, "application/octet-stream", is);
         } catch (Exception exception) {
             return null;
         }
     }
 
+    public NanoHTTPD.Response loadDatabases(NanoHTTPD.IHTTPSession session) {
+        JSONArray databases = new JSONArray(getRouter().getDatabaseNames());
+        return responseStringAsJson(databases.toString());
+    }
+
     public NanoHTTPD.Response loadAllTableNames(NanoHTTPD.IHTTPSession session) {
-        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper(currentDatabase).getWritableDatabase();
         Cursor c = sqLiteDatabase.rawQuery("SELECT name FROM sqlite_master WHERE type='table'", null);
 
         JSONArray tables = new JSONArray();
@@ -50,7 +62,7 @@ public class DBManager extends BaseManager {
             }
         }
 
-        getRouter().getSqLiteOpenHelper().close();
+        getRouter().getSqLiteOpenHelper(currentDatabase).close();
         return responseStringAsJson(tables.toString());
     }
 
@@ -58,7 +70,7 @@ public class DBManager extends BaseManager {
         String table = session.getParameters().get(TABLE).get(0);
         String[] columnTypes = getAllColumnTypes(table);
 
-        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper(currentDatabase).getWritableDatabase();
         Cursor dbCursor = sqLiteDatabase.query(table, null, null, null, null, null, null);
 
         JSONObject result = new JSONObject();
@@ -66,12 +78,12 @@ public class DBManager extends BaseManager {
         result.put(DATA, getData(dbCursor));
 
         dbCursor.close();
-        getRouter().getSqLiteOpenHelper().close();
+        getRouter().getSqLiteOpenHelper(currentDatabase).close();
         return responseStringAsJson(result.toString());
     }
 
     private String[] getAllColumnTypes(String table) {
-        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper(currentDatabase).getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("PRAGMA table_info(" + table + ")", null);
         String[] columnTypes = new String[cursor.getCount()];
         int i = 0;
@@ -92,7 +104,7 @@ public class DBManager extends BaseManager {
         }
 
         String sql = session.getParameters().get("sql").get(0).toLowerCase();
-        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper().getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = getRouter().getSqLiteOpenHelper(currentDatabase).getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(sql, null);
 
         JSONObject result = new JSONObject();

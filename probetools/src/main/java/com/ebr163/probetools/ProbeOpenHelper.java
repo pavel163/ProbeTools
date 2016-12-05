@@ -1,4 +1,4 @@
-package com.ebr163.probetools.database;
+package com.ebr163.probetools;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -8,9 +8,9 @@ import android.util.Log;
 /**
  * Created by Ergashev on 04.12.2016.
  */
-public final class ProbeOpenHelper extends SQLiteOpenHelper {
+final class ProbeOpenHelper extends SQLiteOpenHelper {
 
-    public ProbeOpenHelper(Context context, String name, int version) {
+    ProbeOpenHelper(Context context, String name, int version) {
         super(context, name, null, version);
     }
 

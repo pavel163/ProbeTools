@@ -13,24 +13,27 @@ import com.ebr163.probetools.manager.PreferencesManager;
 import com.ebr163.probetools.manager.TransitionManager;
 import com.ebr163.probetools.manager.util.ManagerFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
 public class Router {
 
-    private Map<Class<? extends BaseManager>, ? extends BaseManager> managers;
+    private Map<Class<? extends BaseManager>, BaseManager> managers = new HashMap<>();
     private ManagerFactory managerFactory;
     private Context context;
-    private String dbName;
-    private SQLiteOpenHelper sqLiteOpenHelper;
     private SharedPreferences preferences;
+    private Map<String, SQLiteOpenHelper> databases;
 
     Router(Context context) {
         this.context = context;
         managers = new HashMap<>();
         managerFactory = new ManagerFactory();
+        databases = new LinkedHashMap<>();
     }
 
     private ManagerFactory getManagerFactory() {
@@ -42,6 +45,7 @@ public class Router {
     }
 
     public <T extends BaseManager> T registerController(T manager) {
+        managers.put(manager.getClass(), manager);
         return (T) manager.setRouter(this);
     }
 
@@ -51,14 +55,6 @@ public class Router {
         }
 
         return (T) managers.get(manager);
-    }
-
-    public String getDbName() {
-        return dbName;
-    }
-
-    void setDBName(String dbName) {
-        this.dbName = dbName;
     }
 
     public void setPreferences(SharedPreferences preferences) {
@@ -73,12 +69,16 @@ public class Router {
         return preferences;
     }
 
-    public SQLiteOpenHelper getSqLiteOpenHelper() {
-        return sqLiteOpenHelper;
+    public SQLiteOpenHelper getSqLiteOpenHelper(String name) {
+        return databases.get(name);
     }
 
-    void setSqLiteOpenHelper(SQLiteOpenHelper sqLiteOpenHelper) {
-        this.sqLiteOpenHelper = sqLiteOpenHelper;
+    void putDatabase(String name, SQLiteOpenHelper sqLiteOpenHelper) {
+        databases.put(name, sqLiteOpenHelper);
+    }
+
+    public List<String> getDatabaseNames() {
+        return new ArrayList<>(databases.keySet());
     }
 
     NanoHTTPD.Response route(NanoHTTPD.IHTTPSession session) throws Exception {
@@ -100,6 +100,11 @@ public class Router {
             return getManager(DBManager.class).loadTable(session);
         } else if (session.getUri().matches("/runSQL") && "POST".equals(session.getMethod().name())) {
             return getManager(DBManager.class).runSQL(session);
+        } else if (session.getUri().matches("/loadDatabases") && "GET".equals(session.getMethod().name())) {
+            return getManager(DBManager.class).loadDatabases(session);
+        }
+        if (session.getUri().contains("database") && "GET".equals(session.getMethod().name())) {
+            return getManager(DBManager.class).transition(session);
         }
         return null;
     }

@@ -2,7 +2,6 @@ package com.ebr163.probetools;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.io.IOException;
@@ -37,14 +36,6 @@ public class Probetools {
         }
     }
 
-    public static void setSQLiteOpenHelper(SQLiteOpenHelper sqLiteOpenHelper) {
-        if (androidWebServer != null) {
-            androidWebServer.setSQLiteOpenHelper(sqLiteOpenHelper);
-        } else {
-            Log.e(TAG_ERROR, "setSQLiteOpenHelper be called before the init");
-        }
-    }
-
     public static void setPreferences(SharedPreferences preferences) {
         if (androidWebServer != null) {
             androidWebServer.setPreferences(preferences);
@@ -53,19 +44,11 @@ public class Probetools {
         }
     }
 
-    public static void setDBName(String dbName) {
+    public static void putDatabase(String dbName, int dbVersion) {
         if (androidWebServer != null) {
-            androidWebServer.setDBName(dbName);
+            androidWebServer.putDatabase(dbName, dbVersion);
         } else {
-            Log.e(TAG_ERROR, "setDBName be called before the init");
-        }
-    }
-
-    public static void setDBName(String dbName, int dbVersion) {
-        if (androidWebServer != null) {
-            androidWebServer.setDBName(dbName, dbVersion);
-        } else {
-            Log.e(TAG_ERROR, "setDBName be called before the init");
+            Log.e(TAG_ERROR, "putDatabase be called before the init");
         }
     }
 }
