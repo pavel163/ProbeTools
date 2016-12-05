@@ -1,6 +1,6 @@
 # ProbeTools
 
-ProbeTools displays the data from the Database and SharedPreferences in the browser.
+ProbeTools displays the data from the Database and SharedPreferences in the browser. Compatible with many ORM
 
 <p align="center"><img style="padding-left:20px" src ="https://github.com/pavel163/ProbeTools/blob/master/1.png" width="350"/>
 
@@ -28,7 +28,7 @@ allprojects {
 #### 2. And on your **app module** `build.gradle`:
 
 ```groovy
-compile 'com.github.pavel163:ProbeTools:1.1.0'
+compile 'com.github.pavel163:ProbeTools:1.2.0'
 ```
 
 #### or Maven:
@@ -36,7 +36,7 @@ compile 'com.github.pavel163:ProbeTools:1.1.0'
 <dependency>
 	    <groupId>com.github.pavel163</groupId>
 	    <artifactId>ProbeTools</artifactId>
-	    <version>1.0.1</version>
+	    <version>1.2.0</version>
 	</dependency>
 ```
 
@@ -55,9 +55,15 @@ public class MyApplication extends Application {
 ## Database
 To work with the database you need:
 ```java
-Probetools.setDBName(DB_NAME);
-Probetools.setSQLiteOpenHelper(mySQLiteOpenHelper);
+Probetools.putDatabase(DB_NAME, DB_VERSION);
 ```
+A few databases:
+```java
+Probetools.putDatabase(DB_NAME_1, DB_VERSION_1);
+Probetools.putDatabase(DB_NAME_2, DB_VERSION_2);
+```
+
+
 ## SharedPreferences
 The default `referenceManager.getDefaultSharedPreferences(context)`
 For replacement use:
