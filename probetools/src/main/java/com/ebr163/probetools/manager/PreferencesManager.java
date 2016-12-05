@@ -11,7 +11,7 @@ import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
-public class PreferencesManager extends TransitionManager {
+public final class PreferencesManager extends TransitionManager {
 
     public NanoHTTPD.Response loadAllPreferences(NanoHTTPD.IHTTPSession session) throws JSONException {
         Map<String, ?> params = getRouter().getPreferences().getAll();

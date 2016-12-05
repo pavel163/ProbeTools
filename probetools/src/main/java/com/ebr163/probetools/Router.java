@@ -9,9 +9,9 @@ import com.ebr163.probetools.manager.AssetsManager;
 import com.ebr163.probetools.manager.BaseManager;
 import com.ebr163.probetools.manager.DBManager;
 import com.ebr163.probetools.manager.IndexManager;
+import com.ebr163.probetools.manager.ManagerFactory;
 import com.ebr163.probetools.manager.PreferencesManager;
 import com.ebr163.probetools.manager.TransitionManager;
-import com.ebr163.probetools.manager.util.ManagerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 import fi.iki.elonen.NanoHTTPD;
 
-public class Router {
+public final class Router {
 
     private Map<Class<? extends BaseManager>, BaseManager> managers = new HashMap<>();
     private ManagerFactory managerFactory;

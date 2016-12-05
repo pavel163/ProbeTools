@@ -18,7 +18,7 @@ import fi.iki.elonen.NanoHTTPD;
 
 import static fi.iki.elonen.NanoHTTPD.newChunkedResponse;
 
-public class DBManager extends TransitionManager {
+public final class DBManager extends TransitionManager {
 
     private static final String TABLE = "table";
     private static final String TITLE = "title";
@@ -26,7 +26,7 @@ public class DBManager extends TransitionManager {
     private static final String DATA = "data";
     private String currentDatabase;
 
-    public DBManager(Context context) {
+    DBManager(Context context) {
         this.context = context;
     }
 

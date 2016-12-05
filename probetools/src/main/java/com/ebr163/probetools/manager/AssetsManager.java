@@ -10,12 +10,12 @@ import fi.iki.elonen.NanoHTTPD;
 
 import static fi.iki.elonen.NanoHTTPD.newChunkedResponse;
 
-public class AssetsManager extends BaseManager {
+public final class AssetsManager extends BaseManager {
 
     private final AssetManager assets;
     private final MimeTypeMap mymeTypesMap;
 
-    public AssetsManager(AssetManager assets) {
+    AssetsManager(AssetManager assets) {
         this.assets = assets;
         mymeTypesMap = MimeTypeMap.getSingleton();
     }
@@ -29,7 +29,7 @@ public class AssetsManager extends BaseManager {
         }
     }
 
-    public NanoHTTPD.Response assetByPath(String path) throws IOException {
+    NanoHTTPD.Response assetByPath(String path) throws IOException {
         final InputStream is = assets.open(path);
         return newChunkedResponse(NanoHTTPD.Response.Status.OK, getMymeType(path), is);
     }

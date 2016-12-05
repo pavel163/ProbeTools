@@ -8,7 +8,10 @@ import fi.iki.elonen.NanoHTTPD;
  * Created by mac1 on 02.11.16.
  */
 
-public class IndexManager extends TransitionManager {
+public final class IndexManager extends TransitionManager {
+
+    IndexManager() {
+    }
 
     @Override
     public NanoHTTPD.Response transition(NanoHTTPD.IHTTPSession session) {
