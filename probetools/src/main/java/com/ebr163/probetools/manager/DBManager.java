@@ -135,9 +135,9 @@ public final class DBManager extends TransitionManager {
     private JSONArray getColumnNames(Cursor cursor, String[] columnTypes) throws JSONException {
         String[] columnNames = cursor.getColumnNames();
         JSONArray colums = new JSONArray();
-        for (int i = 0; i < columnNames.length; i++) {
+        for (String columnName : columnNames) {
             JSONObject column = new JSONObject();
-            column.put(TITLE, columnNames[i]);
+            column.put(TITLE, columnName);
             colums.put(column);
         }
         return colums;
