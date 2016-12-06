@@ -13,18 +13,23 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 <body>
-<nav>
+<nav class="nav-extended">
     <div class="nav-wrapper">
         <a class="brand-logo"><i data-activates="slide-out" class="material-icons button-collapse">menu</i>ProbeTools</a>
         <ul class="right hide-on-med-and-down">
             <li><a class="waves-effect" href="#modal1" title="Add"><i class="material-icons">add</i></a>
             </li>
         </ul>
+        <ul id="tabs" class="tabs tabs-transparent">
+            <li class="tab"><a class="active" href="#request">Request</a></li>
+            <li class="tab"><a href="#response">Response</a></li>
+        </ul>
     </div>
-    <div class="progress" id="progress" style="margin:0">
-        <div class="indeterminate"></div>
-    </div>
+
 </nav>
+
+<div id="request" class="col s12">request</div>
+<div id="response" class="col s12">response</div>
 
 <ul id="slide-out" class="side-nav">
     <li><a href="/" class="waves-effect" style="padding-left:16px"><i class="material-icons">settings</i>SharedPreferences</a>
@@ -48,124 +53,10 @@
     </li>
 </ul>
 
-<table id="preferences">
-    <thead>
-    <tr>
-        <th data-field="id">Name</th>
-        <th data-field="name">Value</th>
-        <th data-field="price">Type</th>
-    </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <div class="input-field col s6">
-            <input id="pref_name" type="text" class="validate">
-            <label for="pref_name">Name</label>
-        </div>
-        <div class="input-field col s6">
-            <input id="pref_value" type="text" class="validate">
-            <label for="pref_value">Value</label>
-        </div>
-        <div class="row">
-            <label>Type</label>
-            <select id="pref_type">
-                <option>String</option>
-                <option>Integer</option>
-                <option>Long</option>
-                <option>Float</option>
-                <option>Boolean</option>
-            </select>
-        </div>
-
-    </div>
-    <div class="modal-footer">
-        <a id="add"
-           class="modal-action modal-close waves-effect waves-green btn-flat">Add</a>
-    </div>
-</div>
-
-
-<div id="medit" class="modal">
-    <div class="modal-content">
-        <embed id="pref_key_edit" hidden="true"/>
-        <div class="input-field col s6">
-            <input id="pref_value_edit" type="text" class="validate">
-            <label for="pref_value_edit">Value</label>
-        </div>
-        <div class="row">
-            <label>Type</label>
-            <select id="pref_type_edit">
-                <option value="String">String</option>
-                <option value="Integer">Integer</option>
-                <option value="Long">Long</option>
-                <option value="Float">Float</option>
-                <option value="Boolean">Boolean</option>
-            </select>
-        </div>
-
-    </div>
-    <div class="modal-footer">
-        <a id="save"
-           class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
-    </div>
-</div>
-
-
 <script type="text/javascript">
         $(".button-collapse").sideNav()
-        $('.modal').modal({
-            ready: function(modal, trigger) {
-                $('#pref_value_edit').val($('#'+$('#pref_key_edit').val()+"_value").text());
-                $('#pref_type_edit').val($('#'+$('#pref_key_edit').val()+"_type").text());
-
-                $('#pref_type_edit').material_select();
-                Materialize.updateTextFields();
-            },
-            complete: function() {}
-            }
-        );
-
+        $('#tabs').tabs();
         loadDatabases();
-
-        $('select').material_select();
-
-        $('select').on('contentChanged', function() {
-            $(this).material_select();
-         });
-
-        preloadOn();
-        $.get( "/preferences/loadAll")
-            .done(function(data) {
-                preloadOff();
-                loadPreferences(data);
-            })
-            .fail(function(){
-                preloadOff();
-            });
-
-        $('#add').on('click', function(){
-            preloadOn();
-            var obj = new Object();
-            obj.key = $('#pref_name').val();
-            obj.value  = $('#pref_value').val();
-            obj.type = $('#pref_type').val();
-            addPreference(obj);
-        })
-
-        $('#save').on('click', function(){
-            preloadOn();
-            var obj = new Object();
-            obj.key = $('#pref_key_edit').val();
-            obj.value  = $('#pref_value_edit').val();
-            obj.type = $('#pref_type_edit').val();
-            editPreference(obj);
-        })
-
-
 </script>
 </body>
 </html>
