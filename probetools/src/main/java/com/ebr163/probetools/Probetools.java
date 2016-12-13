@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.ebr163.probetools.http.ProbeHttpInterceptor;
+
 import java.io.IOException;
 
 /**
@@ -50,5 +52,9 @@ public class Probetools {
         } else {
             Log.e(TAG_ERROR, "putDatabase be called before the init");
         }
+    }
+
+    public static ProbeHttpInterceptor getProbeHttpInterceptor() {
+        return androidWebServer.getProbeHttpInterceptor();
     }
 }

@@ -5,9 +5,11 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 
+import com.ebr163.probetools.http.ProbeHttpInterceptor;
 import com.ebr163.probetools.manager.AssetsManager;
 import com.ebr163.probetools.manager.BaseManager;
 import com.ebr163.probetools.manager.DBManager;
+import com.ebr163.probetools.manager.HttpInterceptManager;
 import com.ebr163.probetools.manager.IndexManager;
 import com.ebr163.probetools.manager.ManagerFactory;
 import com.ebr163.probetools.manager.PreferencesManager;
@@ -28,6 +30,7 @@ public final class Router {
     private Context context;
     private SharedPreferences preferences;
     private Map<String, SQLiteOpenHelper> databases;
+    private ProbeHttpInterceptor probeHttpInterceptor;
 
     Router(Context context) {
         this.context = context;
@@ -62,7 +65,7 @@ public final class Router {
     }
 
     public SharedPreferences getPreferences() {
-        if (preferences == null){
+        if (preferences == null) {
             preferences = PreferenceManager.getDefaultSharedPreferences(context);
         }
 
@@ -79,6 +82,13 @@ public final class Router {
 
     public List<String> getDatabaseNames() {
         return new ArrayList<>(databases.keySet());
+    }
+
+    public ProbeHttpInterceptor getProbeHttpInterceptor() {
+        if (probeHttpInterceptor == null) {
+            probeHttpInterceptor = new ProbeHttpInterceptor();
+        }
+        return probeHttpInterceptor;
     }
 
     NanoHTTPD.Response route(NanoHTTPD.IHTTPSession session) throws Exception {
@@ -102,9 +112,12 @@ public final class Router {
             return getManager(DBManager.class).runSQL(session);
         } else if (session.getUri().matches("/loadDatabases") && "GET".equals(session.getMethod().name())) {
             return getManager(DBManager.class).loadDatabases(session);
-        }
-        if (session.getUri().contains("database") && "GET".equals(session.getMethod().name())) {
+        } else if (session.getUri().contains("database") && "GET".equals(session.getMethod().name())) {
             return getManager(DBManager.class).transition(session);
+        } else if (session.getUri().contains("/http/request") && "GET".equals(session.getMethod().name())) {
+            return getManager(HttpInterceptManager.class).getRequestData(session);
+        } else if (session.getUri().contains("/http/response") && "GET".equals(session.getMethod().name())) {
+            return getManager(HttpInterceptManager.class).getResponseData(session);
         }
         return null;
     }
