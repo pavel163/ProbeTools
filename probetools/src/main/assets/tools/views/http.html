@@ -18,8 +18,7 @@
     <div class="nav-wrapper">
         <a class="brand-logo"><i data-activates="slide-out" class="material-icons button-collapse">menu</i>ProbeTools</a>
         <ul class="right hide-on-med-and-down">
-            <li><a class="waves-effect" href="#modal1" title="Add"><i class="material-icons">add</i></a>
-            </li>
+            <li><a id="start"><i class="material-icons">play_arrow</i></a></li>
         </ul>
         <ul id="tabs" class="tabs tabs-transparent">
             <li class="tab"><a class="active" href="#request">Request</a></li>
@@ -58,8 +57,22 @@
         $(".button-collapse").sideNav()
         $('#tabs').tabs();
         loadDatabases();
-        loadRequestData();
-        loadResponseData();
+
+        var flag = 0;
+
+        $('#start').on('click', function(){
+            if (flag == 0) {
+                loadRequestData();
+                loadResponseData();
+                flag = 1;
+                $('#start').html('<i class="material-icons">stop</i>');
+            } else {
+                clearRequest();
+                clearResponse();
+                flag = 0;
+                $('#start').html('<i class="material-icons">play_arrow</i>');
+            }
+        })
 </script>
 </body>
 </html>

@@ -13,6 +13,7 @@ public class HttpData {
 
     private Map<String, String> headers;
     public String body;
+    public String url;
 
     HttpData() {
         headers = new LinkedHashMap<>();
