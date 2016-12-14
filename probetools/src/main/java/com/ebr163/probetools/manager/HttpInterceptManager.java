@@ -18,6 +18,9 @@ public final class HttpInterceptManager extends BaseManager {
     public NanoHTTPD.Response getRequestData(NanoHTTPD.IHTTPSession session) throws JSONException {
         JSONObject request = new JSONObject();
         HttpData requestData = getRouter().getProbeHttpInterceptor().getRequestData();
+        if (requestData.url.isEmpty()) {
+            return responseStringAsJson("");
+        }
         request.put(HEADERS, new JSONObject(requestData.getHeaders()));
         return responseStringAsJson(request.toString());
     }
@@ -25,6 +28,9 @@ public final class HttpInterceptManager extends BaseManager {
     public NanoHTTPD.Response getResponseData(NanoHTTPD.IHTTPSession session) throws JSONException {
         JSONObject response = new JSONObject();
         HttpData responseData = getRouter().getProbeHttpInterceptor().getResponseData();
+        if (responseData.url.isEmpty()) {
+            return responseStringAsJson("");
+        }
         response.put(HEADERS, new JSONObject(responseData.getHeaders()));
         return responseStringAsJson(response.toString());
     }

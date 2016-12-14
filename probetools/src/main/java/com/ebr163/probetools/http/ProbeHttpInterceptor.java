@@ -29,13 +29,14 @@ public class ProbeHttpInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Log.d("probetools", this.getClass().getSimpleName() + " intercept");
         requestData.clear();
-
         Request request = chain.request();
+        String url = request.url().scheme() + "://" + request.url().host();
+
         requestData.addHeaders(request.headers());
         requestData.body = bodyToString(request);
+        responseData.url = url;
 
         Response response = chain.proceed(request);
-
         MediaType contentType = null;
         if (response.body() != null) {
             contentType = response.body().contentType();
@@ -43,7 +44,7 @@ public class ProbeHttpInterceptor implements Interceptor {
         }
 
         responseData.addHeaders(response.headers());
-
+        responseData.url = url;
         if (response.body() != null) {
             ResponseBody body = ResponseBody.create(contentType, responseData.body);
             return response.newBuilder().body(body).build();

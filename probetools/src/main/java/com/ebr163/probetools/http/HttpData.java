@@ -34,6 +34,7 @@ public class HttpData {
     void clear() {
         headers.clear();
         body = "";
+        url = "";
     }
 
     public Map<String, String> getHeaders() {
