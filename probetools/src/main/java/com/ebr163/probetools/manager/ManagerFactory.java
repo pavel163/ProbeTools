@@ -3,7 +3,7 @@ package com.ebr163.probetools.manager;
 import android.content.Context;
 
 /**
- * Created by mac1 on 02.11.16.
+ * Created by Ergashev on 02.11.16.
  */
 
 public final class ManagerFactory {

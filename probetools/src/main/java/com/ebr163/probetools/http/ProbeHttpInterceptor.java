@@ -12,7 +12,7 @@ import okhttp3.ResponseBody;
 import okio.Buffer;
 
 /**
- * Created by mac1 on 13.12.16.
+ * Created by Ergashev on 13.12.16.
  */
 
 public class ProbeHttpInterceptor implements Interceptor {
@@ -34,7 +34,8 @@ public class ProbeHttpInterceptor implements Interceptor {
 
         requestData.addHeaders(request.headers());
         requestData.body = bodyToString(request);
-        responseData.url = url;
+        requestData.url = url;
+        requestData.addQueryParams(request.url().query());
 
         Response response = chain.proceed(request);
         MediaType contentType = null;

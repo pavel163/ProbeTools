@@ -1,12 +1,15 @@
 package com.ebr163.probetools.http;
 
-import java.util.LinkedHashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Headers;
 
 /**
- * Created by mac1 on 13.12.16.
+ * Created by Ergashev on 13.12.16.
  */
 
 public class HttpData {
@@ -14,9 +17,10 @@ public class HttpData {
     private Map<String, String> headers;
     public String body;
     public String url;
+    private List<String> queryParams;
 
     HttpData() {
-        headers = new LinkedHashMap<>();
+        headers = new HashMap<>();
     }
 
     void addHeaders(Headers headers) {
@@ -25,6 +29,10 @@ public class HttpData {
                 this.headers.put(headers.name(i), headers.value(i));
             }
         }
+    }
+
+    void addQueryParams(String query) {
+        queryParams = new ArrayList<>(Arrays.asList(query.split("&")));
     }
 
     void addHeader(String name, String value) {
@@ -39,5 +47,9 @@ public class HttpData {
 
     public Map<String, String> getHeaders() {
         return headers;
+    }
+
+    public List<String> getQueryParams() {
+        return queryParams;
     }
 }

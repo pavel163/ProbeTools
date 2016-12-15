@@ -9,7 +9,7 @@ import fi.iki.elonen.NanoHTTPD;
 import static fi.iki.elonen.NanoHTTPD.newFixedLengthResponse;
 
 /**
- * Created by mac1 on 02.11.16.
+ * Created by Ergashev on 02.11.16.
  */
 
 public abstract class BaseManager {

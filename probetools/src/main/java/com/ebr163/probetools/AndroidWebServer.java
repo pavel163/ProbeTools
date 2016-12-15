@@ -12,9 +12,6 @@ import java.io.IOException;
 
 import fi.iki.elonen.NanoHTTPD;
 
-/**
- * Created by mac1 on 01.11.16.
- */
 final class AndroidWebServer extends NanoHTTPD {
 
     private int port;
