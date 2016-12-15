@@ -49,21 +49,11 @@
 </div>
 
 <div id="response" class="col s12">
-    <div class="row">
-        <div class="col s12 m6">
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title">Headers</span>
-                    <div id="response_header"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col s12 m6">
-            <div class="card blue-grey darken-1">
-                <div class="card-content white-text">
-                    <span class="card-title">Response</span>
-                    <div id="response_data"></div>
-                </div>
+    <div class="s12 m6" style="margin-left:3%; margin-right:3%">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Response</span>
+                <pre id="response_data"></pre>
             </div>
         </div>
     </div>
@@ -112,6 +102,7 @@
                 $('#start').html('<i class="material-icons">play_arrow</i>');
             }
         })
+
 </script>
 </body>
 </html>

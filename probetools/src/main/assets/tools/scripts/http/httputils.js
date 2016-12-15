@@ -10,13 +10,13 @@ function loadRequestData(){
                  $('#request_body').html('');
                  $('.brand-logo').html('<i data-activates="slide-out" class="material-icons button-collapse">menu</i>' + data.url);
                  var h = '';
-                 var p = '';
                  for (key in data.headers) {
                     if (data.headers.hasOwnProperty(key)) {
                         h = h + '<p>'+key + " : " + data.headers[key]+'</p>'
                     }
                  }
 
+                 var p = '';
                  for (var i = 0; i < data.query.length; i++) {
                     p = p + '<p>'+data.query[i] + '</p>';
                  }
@@ -35,15 +35,8 @@ function loadResponseData(){
         $.get( "/http/response")
                 .done(function(data) {
                     var data = JSON.parse(JSON.stringify(data, undefined, 2));
-                    $('#response_header').html('');
-
-                    var d = '';
-                    for (key in data.headers) {
-                        if (data.headers.hasOwnProperty(key)) {
-                            d = d + '<p>'+key + " : " + data.headers[key]+'</p>'
-                        }
-                    }
-                    $('#response_header').html(d);
+                    $('#response_data').html('');
+                    $('#response_data').html(JSON.stringify(JSON.parse(data.response), undefined, 2));
                 })
                 .fail(function(){
 
