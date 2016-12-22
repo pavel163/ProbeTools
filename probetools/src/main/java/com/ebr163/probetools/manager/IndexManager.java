@@ -5,7 +5,7 @@ import java.io.IOException;
 import fi.iki.elonen.NanoHTTPD;
 
 /**
- * Created by mac1 on 02.11.16.
+ * Created by Ergashev on 02.11.16.
  */
 
 public final class IndexManager extends TransitionManager {

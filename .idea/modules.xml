@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/DBEditor.iml" filepath="$PROJECT_DIR$/DBEditor.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/probetools/probetools.iml" filepath="$PROJECT_DIR$/probetools/probetools.iml" />
+      <module fileurl="file://$PROJECT_DIR$/probetools-http/probetools-http.iml" filepath="$PROJECT_DIR$/probetools-http/probetools-http.iml" />
     </modules>
   </component>
 </project>

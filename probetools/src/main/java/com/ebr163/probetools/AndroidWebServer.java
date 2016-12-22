@@ -6,13 +6,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 
+import com.ebr163.probetools.http.IProbeHttpInterceptor;
+
 import java.io.IOException;
 
 import fi.iki.elonen.NanoHTTPD;
 
-/**
- * Created by mac1 on 01.11.16.
- */
 final class AndroidWebServer extends NanoHTTPD {
 
     private int port;
@@ -71,5 +70,9 @@ final class AndroidWebServer extends NanoHTTPD {
 
     public void setPreferences(SharedPreferences preferences) {
         router.setPreferences(preferences);
+    }
+
+    void setHttpInterceptor(IProbeHttpInterceptor httpInterceptor) {
+        router.setHttpInterceptor(httpInterceptor);
     }
 }

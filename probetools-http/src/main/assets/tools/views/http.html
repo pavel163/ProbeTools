@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="/assets/libs/materialize/js/materialize.min.js"></script>
+    <script src="/assets/scripts/preferences/preferences.js"></script>
+    <script src="/assets/scripts/utils/preload.js"></script>
+    <script src="/assets/scripts/database/dbutil.js"></script>
+    <script src="/assets/scripts/http/httputils.js"></script>
+
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="/assets/libs/materialize/css/materialize.css">
+    <link rel="stylesheet" href="/assets/libs/mdi/materialdesignicons.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+</head>
+<body>
+<nav class="nav-extended">
+    <div class="nav-wrapper">
+        <a class="brand-logo"><i data-activates="slide-out" class="material-icons button-collapse">menu</i>Http</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a id="start"><i class="material-icons">play_arrow</i></a></li>
+        </ul>
+        <ul id="tabs" class="tabs tabs-transparent">
+            <li class="tab"><a class="active" href="#request">Request</a></li>
+            <li class="tab"><a href="#response">Response</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div id="request" class="col s12">
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Headers</span>
+                    <div id="request_header"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <div class="card blue-grey darken-1">
+                <div class="card-content white-text">
+                    <span class="card-title">Params</span>
+                    <div id="request_body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="response" class="col s12">
+    <div class="s12 m6" style="margin-left:3%; margin-right:3%">
+        <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+                <span class="card-title">Response</span>
+                <pre id="response_data"></pre>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ul id="slide-out" class="side-nav">
+    <li><a href="/" class="waves-effect" style="padding-left:16px"><i class="material-icons">settings</i>SharedPreferences</a>
+    </li>
+
+    <li>
+        <ul class="collapsible collapsible-accordion">
+            <li>
+                <a class="collapsible-header"><i class="material-icons">view_agenda</i>Database<i
+                        class="material-icons right">arrow_drop_down</i></a>
+                <div class="collapsible-body">
+                    <ul id="databases">
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </li>
+
+    <li><a href="http.html" class="waves-effect" style="padding-left:16px"><i
+            class="material-icons">http</i>Http</a>
+    </li>
+</ul>
+
+<script type="text/javascript">
+        $(".button-collapse").sideNav()
+        $('#tabs').tabs();
+        loadDatabases();
+
+        var flag = 0;
+
+        $('#start').on('click', function(){
+            if (flag == 0) {
+                loadRequestData();
+                loadResponseData();
+                flag = 1;
+                $('#start').html('<i class="material-icons">stop</i>');
+            } else {
+                clearRequest();
+                clearResponse();
+                flag = 0;
+                $('#start').html('<i class="material-icons">play_arrow</i>');
+            }
+        })
+
+</script>
+</body>
+</html>

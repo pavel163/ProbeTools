@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.ebr163.probetools.http.IProbeHttpInterceptor;
+
 import java.io.IOException;
 
 /**
- * Created by mac1 on 21.11.16.
+ * Created by Ergashev on 21.11.16.
  */
 
 public class Probetools {
@@ -25,7 +27,7 @@ public class Probetools {
     }
 
     private static void startServer() {
-        if (androidWebServer != null){
+        if (androidWebServer != null) {
             try {
                 androidWebServer.startSever();
             } catch (IOException e) {
@@ -50,5 +52,9 @@ public class Probetools {
         } else {
             Log.e(TAG_ERROR, "putDatabase be called before the init");
         }
+    }
+
+    public static void setHttpInterceptor(IProbeHttpInterceptor interceptor) {
+        androidWebServer.setHttpInterceptor(interceptor);
     }
 }
