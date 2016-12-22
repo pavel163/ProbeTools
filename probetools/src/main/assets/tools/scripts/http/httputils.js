@@ -21,6 +21,8 @@ function loadRequestData(){
                     p = p + '<p>'+data.query[i] + '</p>';
                  }
                  $('#request_header').html(h);
+
+                 p = p + '<pre>' + JSON.stringify(JSON.parse(data.body), undefined, 2) + '</pre>'
                  $('#request_body').html(p);
             })
             .fail(function(){
@@ -36,7 +38,7 @@ function loadResponseData(){
                 .done(function(data) {
                     var data = JSON.parse(JSON.stringify(data, undefined, 2));
                     $('#response_data').html('');
-                    $('#response_data').html(JSON.stringify(JSON.parse(data.response), undefined, 2));
+                    $('#response_data').html(JSON.stringify(JSON.parse(data.body), undefined, 2));
                 })
                 .fail(function(){
 
