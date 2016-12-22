@@ -9,6 +9,7 @@ function loadRequestData(){
                  $('#request_header').html('');
                  $('#request_body').html('');
                  $('.brand-logo').html('<i data-activates="slide-out" class="material-icons button-collapse">menu</i>' + data.url);
+                 $(".button-collapse").sideNav();
                  var h = '';
                  for (key in data.headers) {
                     if (data.headers.hasOwnProperty(key)) {
