@@ -1,1 +1,1 @@
-include ':app', ':probetools'
+include ':app', ':probetools', ':probetools-http'

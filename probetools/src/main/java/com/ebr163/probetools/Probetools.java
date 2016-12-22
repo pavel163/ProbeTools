@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.ebr163.probetools.http.ProbeHttpInterceptor;
+import com.ebr163.probetools.http.IProbeHttpInterceptor;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ public class Probetools {
     }
 
     private static void startServer() {
-        if (androidWebServer != null){
+        if (androidWebServer != null) {
             try {
                 androidWebServer.startSever();
             } catch (IOException e) {
@@ -54,7 +54,7 @@ public class Probetools {
         }
     }
 
-    public static ProbeHttpInterceptor getProbeHttpInterceptor() {
-        return androidWebServer.getProbeHttpInterceptor();
+    public static void setHttpInterceptor(IProbeHttpInterceptor interceptor) {
+        androidWebServer.setHttpInterceptor(interceptor);
     }
 }

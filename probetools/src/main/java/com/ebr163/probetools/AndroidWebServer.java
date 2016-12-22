@@ -6,7 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 
-import com.ebr163.probetools.http.ProbeHttpInterceptor;
+import com.ebr163.probetools.http.IProbeHttpInterceptor;
 
 import java.io.IOException;
 
@@ -72,7 +72,7 @@ final class AndroidWebServer extends NanoHTTPD {
         router.setPreferences(preferences);
     }
 
-    ProbeHttpInterceptor getProbeHttpInterceptor() {
-        return router.getProbeHttpInterceptor();
+    void setHttpInterceptor(IProbeHttpInterceptor httpInterceptor) {
+        router.setHttpInterceptor(httpInterceptor);
     }
 }

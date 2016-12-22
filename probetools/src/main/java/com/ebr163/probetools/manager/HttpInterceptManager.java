@@ -30,13 +30,13 @@ public final class HttpInterceptManager extends BaseManager {
 
     private JSONObject createAnswer(HttpData data) throws JSONException {
         JSONObject answer = new JSONObject();
-        if (data.url.isEmpty()) {
+        if (data.getUrl().isEmpty()) {
             return null;
         }
-        answer.put(URL, data.url);
+        answer.put(URL, data.getUrl());
         answer.put(HEADERS, new JSONObject(data.getHeaders()));
         answer.put(QUERY_PARAMS, new JSONArray(data.getQueryParams()));
-        answer.put(BODY, data.body);
+        answer.put(BODY, data.getBody());
         return answer;
     }
 }

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 
-import com.ebr163.probetools.http.ProbeHttpInterceptor;
+import com.ebr163.probetools.http.IProbeHttpInterceptor;
 import com.ebr163.probetools.manager.AssetsManager;
 import com.ebr163.probetools.manager.BaseManager;
 import com.ebr163.probetools.manager.DBManager;
@@ -30,7 +30,7 @@ public final class Router {
     private Context context;
     private SharedPreferences preferences;
     private Map<String, SQLiteOpenHelper> databases;
-    private ProbeHttpInterceptor probeHttpInterceptor;
+    private IProbeHttpInterceptor httpInterceptor;
 
     Router(Context context) {
         this.context = context;
@@ -80,15 +80,17 @@ public final class Router {
         databases.put(name, sqLiteOpenHelper);
     }
 
+
+    void setHttpInterceptor(IProbeHttpInterceptor httpInterceptor) {
+        this.httpInterceptor = httpInterceptor;
+    }
+
     public List<String> getDatabaseNames() {
         return new ArrayList<>(databases.keySet());
     }
 
-    public ProbeHttpInterceptor getProbeHttpInterceptor() {
-        if (probeHttpInterceptor == null) {
-            probeHttpInterceptor = new ProbeHttpInterceptor();
-        }
-        return probeHttpInterceptor;
+    public IProbeHttpInterceptor getProbeHttpInterceptor() {
+        return httpInterceptor;
     }
 
     NanoHTTPD.Response route(NanoHTTPD.IHTTPSession session) throws Exception {

@@ -2,7 +2,7 @@ package com.ebr163.probeapp.service.http;
 
 import android.util.Log;
 
-import com.ebr163.probetools.Probetools;
+import com.ebr163.probetools.okhttp3.ProbeHttpInterceptor;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -21,7 +21,7 @@ public class HttpService {
 
     public HttpService() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.addInterceptor(Probetools.getProbeHttpInterceptor());
+        builder.addInterceptor(new ProbeHttpInterceptor());
         OkHttpClient client = builder.build();
 
         Retrofit retrofit = new Retrofit.Builder()
