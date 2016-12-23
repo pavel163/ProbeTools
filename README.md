@@ -13,6 +13,7 @@ ProbeTools displays the data from the Database and SharedPreferences in the brow
 3. Upload database.
 4. Viewing tables.
 5. Create sql request.
+6. Interception last http request and response (work with OkHttp3)
 
 
 ## Setup
@@ -28,16 +29,7 @@ allprojects {
 #### 2. And on your **app module** `build.gradle`:
 
 ```groovy
-compile 'com.github.pavel163:ProbeTools:1.2.0'
-```
-
-#### or Maven:
-```xml
-<dependency>
-	    <groupId>com.github.pavel163</groupId>
-	    <artifactId>ProbeTools</artifactId>
-	    <version>1.2.0</version>
-	</dependency>
+compile 'com.github.pavel163.ProbeTools:probetools:2.0.0'
 ```
 
 #### 3. In your `Application` class:
@@ -70,6 +62,21 @@ For replacement use:
 ```java
 Probetools.setPreferences(getSharedPreferences("pref", MODE_PRIVATE));
 ```
+## Http 
+Add to your **app module** `build.gradle`:
+```groovy
+compile 'com.github.pavel163.ProbeTools:probetools-http:2.0.0'
+```
+and
+
+```java
+OkHttpClient.Builder builder = new OkHttpClient.Builder();
+builder.addInterceptor(new ProbeHttpInterceptor());
+OkHttpClient client = builder.build();
+```
+
+
+
 Open the browser and go to ip address in notification
 <p align="center"><img style="padding-left:20px" src ="https://github.com/pavel163/ProbeTools/blob/master/Screenshot_20161130-170820.png" width="250"/>
 </p>
